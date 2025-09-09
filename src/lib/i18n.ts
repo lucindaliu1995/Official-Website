@@ -56,6 +56,8 @@ export interface TranslationData {
         statDescription: string;
         secondStatDescription: string;
         thirdStatDescription: string;
+        fourthStat: string;
+        fourthStatDescription: string;
         painPoints: string[];
         testimonial: string;
         author: string;
@@ -69,6 +71,8 @@ export interface TranslationData {
         statDescription: string;
         secondStatDescription: string;
         thirdStatDescription: string;
+        fourthStat: string;
+        fourthStatDescription: string;
         painPoints: string[];
         testimonial: string;
         author: string;
@@ -559,9 +563,9 @@ export const translations: Record<Language, TranslationData> = {
       login: 'login'
     },
     hero: {
-      title: 'Climate Seal',
-      subtitle: 'AI Agent of product carbon footprint\nAccounting & Assurance',
-      description: 'Generate audit-ready product carbon footprints in days, not months. Cut costs and complexity with Climate Seal\'s AI agent.',
+      title: 'AI Agent for Product Carbon Footprint Accounting & Assurance',
+      subtitle: 'Generate audit-ready Product Carbon Footprints (PCFs) in days, not months. Cut costs and complexity with Climate Seal\'s AI agent.',
+      description: 'Zero Expertise Required - Guided workflows and automated data processing make complex accounting accessible to anyone.\nSlash Time & Cost - Achieve in days what traditionally takes months, at a fraction of the cost.\nAudit-Ready Guarantee - Generate reports that adhere to all major frameworks & regulations, including GHG Protocol, ISO 14067, and CBAM.',
       getStarted: 'Book a Demo with First Report Free',
       learnMore: 'Learn More',
       trustedBy: 'Trusted by'
@@ -601,10 +605,12 @@ export const translations: Record<Language, TranslationData> = {
           title: 'Brands & Procurement Leaders',
           role: 'Sustainability Leader',
           needs: 'I need to achieve brand and supply chain carbon reduction goals, reduce supply chain carbon management costs and pressure, enabling painless high-quality carbon emission data from supply chain',
-          stat: '90%',
-          statDescription: 'On-time\nsubmission rate',
-          secondStatDescription: 'Reduced follow-up\nand cleanup work',
-          thirdStatDescription: 'Data quality\nimprovement',
+          stat: '≈ $100 / 4 hours per SKU — verification-grade PCF/report',
+          statDescription: 'Slash compliance cost and waiting time',
+          secondStatDescription: 'Built-in data quality gates + deadline control',
+          thirdStatDescription: 'Ensure auditable, comparable, and consistent data',
+          fourthStat: '90%+ suppliers pass on first submission (pre-validation)',
+          fourthStatDescription: 'Support rigorous decarbonization and sourcing',
           painPoints: [
             'Supply-chain companies lack specialized expertise, making compliance costly and burdensome',
             'Endless chasing supply chain data; on-time deliveries only 40-70%',
@@ -619,10 +625,12 @@ export const translations: Record<Language, TranslationData> = {
           title: 'Suppliers & Exporters',
           role: 'Export Enterprise Compliance Manager',
           needs: 'I need low-cost, high-efficiency solutions to provide credible carbon footprint reports to importers and downstream customers, ensuring sales are not affected',
-          stat: '90%',
-          statDescription: 'Report turnaround\nspeed improvement',
-          secondStatDescription: 'First-time\napproval rate',
-          thirdStatDescription: 'Compliance cost\nreduction',
+          stat: '4 Hours',
+          statDescription: 'Complete an audit-ready PCF',
+          secondStatDescription: 'Get Approved in One Go',
+          thirdStatDescription: 'Reduce compliance cost significantly',
+          fourthStat: '3 Files',
+          fourthStatDescription: 'Minimal data input and one simple workflow',
           painPoints: [
             'PCF reports take 4-8 weeks, missing RFQ / tender deadlines',
             'Rework cycles delay shipments and risk customs holds',
@@ -637,7 +645,7 @@ export const translations: Record<Language, TranslationData> = {
         title: 'Meet Your AI Carbon Expert And Assistants',
         subtitle: 'Choose your role. Your AI carbon experts and assistants are ready to support you 24/7.',
         comingSoon: 'Coming soon',
-        getStarted: 'Get a demo & 2 free reports trail',
+        getStarted: 'Book a Demo with First Report Free',
         trustCenter: 'Visit our resource session',
         assistants: {
           carbonExpert: {
@@ -1010,7 +1018,7 @@ export const translations: Record<Language, TranslationData> = {
     },
     contact: {
       title: 'Contact Us',
-      subtitle: 'Ready to start your carbon neutral journey? Our expert team is here to support you',
+      subtitle: 'Get your first audit-ready report. Schedule a call with our team to discover how simple carbon accounting can be.',
       description: 'Get in touch with our team',
       form: {
         name: 'Name',
@@ -1148,9 +1156,9 @@ export const translations: Record<Language, TranslationData> = {
       login: '登录'
     },
     hero: {
-      title: 'Climate Seal',
-      subtitle: 'AI智能体产品碳足迹\n计算与预核验',
-      description: '几小时内生成核验就绪的产品碳足迹报告，而非数月。通过Climate Seal的AI agent降低成本和专业门槛。',
+      title: 'AI智能体：产品碳足迹核算与保障（Accounting & Assurance）',
+      subtitle: '在数天内生成核验级的产品碳足迹（PCF）成果，而非数月。借助 Climate Seal 的 AI 智能体，显著降低成本与复杂度。',
+      description: '零门槛上手——引导式流程与自动化数据处理，让任何角色都能完成专业核算。\n时间与成本减半——以天为单位完成传统需数月的工作，成本仅为其一小部分。\n核验就绪保证——遵循 GHG Protocol、ISO 14067、CBAM 等主流框架与法规，生成可核验的合规成果。',
       getStarted: '预约演示，首份报告免费',
       learnMore: '了解更多',
       trustedBy: '信赖我们的客户'
@@ -1190,10 +1198,12 @@ export const translations: Record<Language, TranslationData> = {
           title: '品牌方和采购负责人',
           role: '可持续负责人',
           needs: '我需要完成品牌和供应链降碳目标，降低供应链碳管理成本和压力，让供应链无痛提供高质量碳排放数据',
-          stat: '67%',
-          statDescription: 'Scope 3覆盖率达成',
-          secondStatDescription: '数据收集和处理效率提升',
-          thirdStatDescription: '供应链管理成本降低',
+          stat: '每 SKU 约 $100 / 4 小时 交付核验级 PCF/报告',
+          statDescription: '显著降低合规成本与等待时间',
+          secondStatDescription: '内置数据质量门槛 + 截止管理',
+          thirdStatDescription: '确保数据可审计、可比、一致',
+          fourthStat: '90%+ 供应商一次达标（预核验通过）',
+          fourthStatDescription: '支撑更科学的减碳与采购',
           painPoints: [
             '供应链企业缺乏专业知识，合规成本高且繁重',
             '无尽止地追踪供应链数据；按时交付率仅为40-70%',
@@ -1208,10 +1218,12 @@ export const translations: Record<Language, TranslationData> = {
           title: '供应商和出口商',
           role: '出口企业合规负责人',
           needs: '我需要低成本、高效率的向进口方和下游客户提供可信碳足迹报告，确保销售不受影响',
-          stat: '1%',
-          statDescription: '传统PCF合规成本',
-          secondStatDescription: '周转时间从周到小时',
-          thirdStatDescription: '首次通过率提升',
+          stat: '4 小时',
+          statDescription: '完成核验级 PCF',
+          secondStatDescription: '一次通过',
+          thirdStatDescription: '显著降低合规成本',
+          fourthStat: '3 个文件',
+          fourthStatDescription: '最少数据输入与一个简单流程',
           painPoints: [
             'PCF报告需要4-8周，错过RFQ/招标截止日期',
             '返工周期延迟出货，可能面临海关扣留风险',
@@ -1226,7 +1238,7 @@ export const translations: Record<Language, TranslationData> = {
         title: '遇见您的AI碳足迹专家团队',
         subtitle: '选择您的角色，您的AI碳足迹专家和助手已准备好为您提供24/7全天候支持。',
         comingSoon: '即将推出',
-        getStarted: '获取演示和2份免费报告',
+        getStarted: '预约演示，首份报告免费',
         trustCenter: '访问资源中心',
         assistants: {
           carbonExpert: {
@@ -1599,7 +1611,7 @@ export const translations: Record<Language, TranslationData> = {
     },
     contact: {
       title: '联系我们',
-      subtitle: '准备开始您的碳中和之旅？我们的专家团队随时为您提供支持',
+      subtitle: '获取您的第一份核验级报告。预约与我们团队的通话，了解碳核算可以多么简单。',
       description: '联系我们的团队',
       form: {
         name: '姓名',

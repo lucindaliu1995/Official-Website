@@ -423,15 +423,49 @@ export default function Home() {
         
         <div className="relative z-10 min-h-screen grid grid-cols-1 lg:grid-cols-2 items-center">
           <div className="text-center lg:text-left text-white px-4 lg:px-16 order-2 lg:order-1 mt-6 lg:mt-0 lg:translate-x-8 lg:translate-y-4">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
-              {t.hero.title}
+            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+              {/* Keep mobile unchanged; on desktop enforce no-wrap for specific phrases */}
+              <span className="md:hidden">{t.hero.title}</span>
+              <span className="hidden md:inline">
+                {(() => {
+                  const title = t.hero.title;
+                  const aiAgent = 'AI Agent for';
+                  const pcf = 'Product Carbon Footprint';
+                  const accounting = 'Accounting & Assurance';
+                  if (title.includes(aiAgent) && title.includes(pcf) && title.includes(accounting)) {
+                    return (
+                      <>
+                        <span className="whitespace-nowrap">{aiAgent}</span>{' '}
+                        <span className="whitespace-nowrap">{pcf}</span>{' '}
+                        <span>{accounting}</span>
+                      </>
+                    );
+                  }
+                  return title;
+                })()}
+              </span>
             </h1>
-            <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-light mb-6 whitespace-pre-line">
+            <h2 className="text-base sm:text-lg md:text-xl lg:text-lg font-light leading-snug mb-4 whitespace-pre-line">
               {t.hero.subtitle}
             </h2>
-            <p className="text-base sm:text-lg md:text-xl lg:text-xl mb-8 font-light opacity-90">
-              {t.hero.description}
-            </p>
+            {/* Mobile: show only short headings */}
+            <div className="md:hidden text-sm sm:text-base mb-8 font-light opacity-90 text-center space-y-2">
+              {t.hero.description.split('\n').map((line, idx) => (
+                <div key={idx} className="inline-flex items-center justify-center gap-2 w-full">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
+                  <span className="block">{line.split(' - ')[0]}</span>
+                </div>
+              ))}
+            </div>
+            {/* Desktop: keep full description */}
+            <div className="hidden md:block text-base lg:text-sm mb-8 font-light opacity-90 text-left space-y-2">
+              {t.hero.description.split('\n').map((line, idx) => (
+                <div key={idx} className="flex items-start gap-2">
+                  <span className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
+                  <span className="block">{line}</span>
+                </div>
+              ))}
+            </div>
             <a 
               href="#contact"
               className="bg-yellow-400 hover:bg-yellow-500 text-[rgb(0,52,50)] px-6 sm:px-8 py-1.5 sm:py-2.5 rounded-full font-semibold text-sm sm:text-base transition duration-300 inline-flex items-center gap-2 mt-2 whitespace-pre-line text-center leading-none"
@@ -556,8 +590,8 @@ export default function Home() {
                     <p className="text-[#333] text-xs text-right">{t.sections.personas.brandOwner.thirdStatDescription}</p>
                   </div>
                   <div className="flex items-center justify-between bg-white rounded-xl px-3 py-2">
-                    <div className="text-[#333] text-sm font-bold">DQR+ Industry Data</div>
-                    <p className="text-[#333] text-xs text-right">Field-level Data Validation</p>
+                    <div className="text-[#333] text-sm font-bold">{t.sections.personas.brandOwner.fourthStat}</div>
+                    <p className="text-[#333] text-xs text-right">{t.sections.personas.brandOwner.fourthStatDescription}</p>
                   </div>
                 </div>
               ) : (
@@ -571,8 +605,8 @@ export default function Home() {
                     <p className="text-[#333] text-xs text-right">{t.sections.personas.supplyChain.thirdStatDescription}</p>
                   </div>
                   <div className="flex items-center justify-between bg-white rounded-xl px-3 py-2">
-                    <div className="text-[#333] text-sm font-bold">DQR+ Industry Data</div>
-                    <p className="text-[#333] text-xs text-right">Field-level Data Validation</p>
+                    <div className="text-[#333] text-sm font-bold">{t.sections.personas.supplyChain.fourthStat}</div>
+                    <p className="text-[#333] text-xs text-right">{t.sections.personas.supplyChain.fourthStatDescription}</p>
                   </div>
                 </div>
               )}
@@ -737,19 +771,19 @@ export default function Home() {
                   </div>
                 ) : activePersona === 'brandOwner' ? (
                   <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[22px] lg:text-[26px] font-bold leading-none tracking-[-0.5px]">
+                    <div className="text-[#333333] text-[18px] lg:text-[22px] font-bold leading-none tracking-[-0.5px]">
                       {t.sections.personas.brandOwner.stat}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[200px] text-right leading-snug">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[260px] lg:max-w-[280px] text-right leading-snug">
                       {t.sections.personas.brandOwner.statDescription}
                     </p>
                   </div>
                 ) : (
                   <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[22px] lg:text-[26px] font-bold leading-none tracking-[-0.5px]">
+                    <div className="text-[#333333] text-[20px] lg:text-[24px] font-bold leading-none tracking-[-0.5px]">
                       {t.sections.personas.supplyChain.stat}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[200px] text-right leading-snug">
+                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[260px] lg:max-w-[300px] text-right leading-snug">
                       {t.sections.personas.supplyChain.statDescription}
                     </p>
                   </div>
@@ -769,19 +803,19 @@ export default function Home() {
                   </div>
                 ) : activePersona === 'brandOwner' ? (
                   <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[22px] lg:text-[26px] font-bold leading-none tracking-[-0.5px]">
+                    <div className="text-[#333333] text-[18px] lg:text-[22px] font-bold leading-none tracking-[-0.5px]">
                       {t.sections.personas.brandOwner.secondStatDescription}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[200px] text-right leading-snug">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[260px] lg:max-w-[280px] text-right leading-snug">
                       {t.sections.personas.brandOwner.thirdStatDescription}
                     </p>
                   </div>
                 ) : (
                   <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[22px] lg:text-[26px] font-bold leading-none tracking-[-0.5px]">
+                    <div className="text-[#333333] text-[20px] lg:text-[24px] font-bold leading-none tracking-[-0.5px]">
                       {t.sections.personas.supplyChain.secondStatDescription}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[200px] text-right leading-snug">
+                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[260px] lg:max-w-[300px] text-right leading-snug">
                       {t.sections.personas.supplyChain.thirdStatDescription}
                     </p>
                   </div>
@@ -801,20 +835,20 @@ export default function Home() {
                   </div>
                 ) : activePersona === 'brandOwner' ? (
                   <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[22px] lg:text-[26px] font-bold leading-none tracking-[-0.5px]">
-                      {t.sections.personas.brandOwner.stat}
+                    <div className="text-[#333333] text-[18px] lg:text-[22px] font-bold leading-none tracking-[-0.5px]">
+                      {t.sections.personas.brandOwner.fourthStat}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[200px] text-right leading-snug">
-                      {t.sections.personas.brandOwner.statDescription}
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[260px] lg:max-w-[280px] text-right leading-snug">
+                      {t.sections.personas.brandOwner.fourthStatDescription}
                     </p>
                   </div>
                 ) : (
                   <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[22px] lg:text-[26px] font-bold leading-none tracking-[-0.5px]">
-                      {t.sections.personas.supplyChain.stat}
+                    <div className="text-[#333333] text-[20px] lg:text-[24px] font-bold leading-none tracking-[-0.5px]">
+                      {t.sections.personas.supplyChain.fourthStat}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[200px] text-right leading-snug">
-                      {t.sections.personas.supplyChain.statDescription}
+                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[260px] lg:max-w-[300px] text-right leading-snug">
+                      {t.sections.personas.supplyChain.fourthStatDescription}
                     </p>
                   </div>
                 )}
@@ -1766,7 +1800,6 @@ export default function Home() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-8 md:gap-10 max-w-6xl mx-auto">
             <div className="flex flex-col justify-center order-2 lg:order-1">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-6 sm:mb-4">{t.sections.moreInfo}</h3>
               <div className="space-y-4 sm:space-y-3">
                 <div className="flex items-center">
                   <span className="text-xl sm:text-2xl mr-3 sm:mr-4">📧</span>
@@ -1810,7 +1843,6 @@ export default function Home() {
             </div>
 
             <div className="bg-[#98a2f8] bg-opacity-90 p-4 sm:p-6 rounded-2xl backdrop-blur-sm self-start order-1 lg:order-2">
-              <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-black">{t.contact.form.submit}</h3>
               <form onSubmit={handleSubmit} className="space-y-1.5 sm:space-y-1.5" data-form="contact-form" data-section="contact-form">
                 {/* 姓名和邮箱 - 两栏布局 */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">

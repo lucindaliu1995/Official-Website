@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Script from 'next/script';
+import TitleUpdater from "@/components/TitleUpdater";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +23,7 @@ const bingVerification = process.env.NEXT_PUBLIC_BING_VERIFICATION as string | u
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://climate-seal.com"),
   title: {
-    default: "Climate Seal - 企业碳排放管理平台 | AI碳盘查与供应链碳足迹核算系统",
+    default: "AI Agent for Product Carbon Footprint Accounting & Assurance | Climate Seal",
     template: "%s | Climate Seal"
   },
   description: "领先的企业碳排放管理平台，提供AI驱动的碳盘查工具、供应链碳足迹核算和Scope 3排放计算。支持CBAM报告、GHG Protocol标准，助力制造业和物流业实现碳中和目标。",
@@ -98,9 +99,9 @@ export const metadata: Metadata = {
     ...(bingVerification ? { other: { bing: bingVerification } } : {}),
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico"
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png"
   }
 };
 
@@ -180,6 +181,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <LanguageProvider>
+          <TitleUpdater />
           <Navbar />
           <main className="min-h-screen">
             {children}
