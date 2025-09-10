@@ -423,7 +423,7 @@ export default function Home() {
         
         <div className="relative z-10 min-h-screen grid grid-cols-1 lg:grid-cols-2 items-center">
           <div className="text-center lg:text-left text-white px-4 lg:px-16 order-2 lg:order-1 mt-6 lg:mt-0 lg:translate-x-8 lg:translate-y-4">
-            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4 relative z-20">
               {/* Keep mobile unchanged; on desktop enforce no-wrap for specific phrases */}
               <span className="md:hidden">{t.hero.title}</span>
               <span className="hidden md:inline">
@@ -454,15 +454,6 @@ export default function Home() {
                 <div key={idx} className="inline-flex items-center justify-center gap-2 w-full">
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
                   <span className="block">{line.split(' - ')[0]}</span>
-                </div>
-              ))}
-            </div>
-            {/* Desktop: keep full description */}
-            <div className="hidden md:block text-base lg:text-sm mb-8 font-light opacity-90 text-left space-y-2">
-              {t.hero.description.split('\n').map((line, idx) => (
-                <div key={idx} className="flex items-start gap-2">
-                  <span className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
-                  <span className="block">{line}</span>
                 </div>
               ))}
             </div>
@@ -757,33 +748,33 @@ export default function Home() {
               </div>
 
               {/* Right Side Cards */}
-              <div className="lg:absolute lg:top-0 lg:left-[970px] lg:w-[400px] flex flex-col gap-6">
+              <div className="lg:absolute lg:top-0 lg:left-[970px] lg:w-[400px] flex flex-col gap-4">
               {/* First Card - 1 Minute */}
-              <div className="w-full h-[124px] bg-[#f7f9ff] rounded-3xl p-6 md:p-7 border border-[#e6e8f2] shadow-sm animate-fade-up" style={{animationDelay: "0.2s"}}>
+              <div className="w-full h-[128px] bg-[#f7f9ff] rounded-3xl p-3 border border-[#e6e8f2] shadow-sm animate-fade-up" style={{animationDelay: "0.2s"}}>
                 {activePersona === 'carbonExpert' ? (
-                  <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[22px] lg:text-[26px] font-bold leading-none tracking-[-0.5px]">
+                  <div className="flex items-center h-full justify-between gap-3">
+                    <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.carbonExpert.stat}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[200px] text-right leading-snug">
+                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
                       {t.sections.personas.carbonExpert.statDescription}
                     </p>
                   </div>
                 ) : activePersona === 'brandOwner' ? (
-                  <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[18px] lg:text-[22px] font-bold leading-none tracking-[-0.5px]">
+                  <div className="flex items-center h-full justify-between gap-3">
+                    <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.brandOwner.stat}
                     </div>
-                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[260px] lg:max-w-[280px] text-right leading-snug">
+                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
                       {t.sections.personas.brandOwner.statDescription}
                     </p>
                   </div>
                 ) : (
-                  <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[20px] lg:text-[24px] font-bold leading-none tracking-[-0.5px]">
+                  <div className="flex items-center h-full justify-between gap-3">
+                    <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.supplyChain.stat}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[260px] lg:max-w-[300px] text-right leading-snug">
+                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
                       {t.sections.personas.supplyChain.statDescription}
                     </p>
                   </div>
@@ -791,31 +782,31 @@ export default function Home() {
               </div>
 
               {/* Second Card - 95% Accuracy */}
-              <div className="w-full h-[124px] bg-[#f7f9ff] rounded-3xl p-6 md:p-7 border border-[#e6e8f2] shadow-sm animate-fade-up" style={{animationDelay: "0.4s"}}>
+              <div className="w-full h-[128px] bg-[#f7f9ff] rounded-3xl p-3 border border-[#e6e8f2] shadow-sm animate-fade-up" style={{animationDelay: "0.4s"}}>
                 {activePersona === 'carbonExpert' ? (
-                  <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[22px] lg:text-[26px] font-bold leading-none tracking-[-0.5px]">
+                  <div className="flex items-center h-full justify-between gap-3">
+                    <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.carbonExpert.secondStatDescription}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[200px] text-right leading-snug">
+                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
                       {t.sections.personas.carbonExpert.thirdStatDescription}
                     </p>
                   </div>
                 ) : activePersona === 'brandOwner' ? (
-                  <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[18px] lg:text-[22px] font-bold leading-none tracking-[-0.5px]">
+                  <div className="flex items-center h-full justify-between gap-3">
+                    <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.brandOwner.secondStatDescription}
                     </div>
-                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[260px] lg:max-w-[280px] text-right leading-snug">
+                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
                       {t.sections.personas.brandOwner.thirdStatDescription}
                     </p>
                   </div>
                 ) : (
-                  <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[20px] lg:text-[24px] font-bold leading-none tracking-[-0.5px]">
+                  <div className="flex items-center h-full justify-between gap-3">
+                    <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.supplyChain.secondStatDescription}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[260px] lg:max-w-[300px] text-right leading-snug">
+                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
                       {t.sections.personas.supplyChain.thirdStatDescription}
                     </p>
                   </div>
@@ -823,31 +814,31 @@ export default function Home() {
               </div>
 
               {/* Third Card - DQR+ Industry Data */}
-              <div className="w-full h-[124px] bg-[#f7f9ff] rounded-3xl p-6 md:p-7 border border-[#e6e8f2] shadow-sm animate-fade-up" style={{animationDelay: "0.6s"}}>
+              <div className="w-full h-[128px] bg-[#f7f9ff] rounded-3xl p-3 border border-[#e6e8f2] shadow-sm animate-fade-up" style={{animationDelay: "0.6s"}}>
                 {activePersona === 'carbonExpert' ? (
-                  <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[22px] lg:text-[26px] font-bold leading-none tracking-[-0.5px]">
+                  <div className="flex items-center h-full justify-between gap-3">
+                    <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.carbonExpert.fourthStat}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[200px] text-right leading-snug">
+                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
                       {t.sections.personas.carbonExpert.fourthStatDescription}
                     </p>
                   </div>
                 ) : activePersona === 'brandOwner' ? (
-                  <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[18px] lg:text-[22px] font-bold leading-none tracking-[-0.5px]">
+                  <div className="flex items-center h-full justify-between gap-3">
+                    <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.brandOwner.fourthStat}
                     </div>
-                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[260px] lg:max-w-[280px] text-right leading-snug">
+                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
                       {t.sections.personas.brandOwner.fourthStatDescription}
                     </p>
                   </div>
                 ) : (
-                  <div className="flex items-center h-full justify-between">
-                    <div className="text-[#333333] text-[20px] lg:text-[24px] font-bold leading-none tracking-[-0.5px]">
+                  <div className="flex items-center h-full justify-between gap-3">
+                    <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.supplyChain.fourthStat}
                     </div>
-                    <p className="text-[#333333] text-sm lg:text-base font-normal max-w-[260px] lg:max-w-[300px] text-right leading-snug">
+                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
                       {t.sections.personas.supplyChain.fourthStatDescription}
                     </p>
                   </div>

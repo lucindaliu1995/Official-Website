@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     default: "AI Agent for Product Carbon Footprint Accounting & Assurance | Climate Seal",
     template: "%s | Climate Seal"
   },
-  description: "领先的企业碳排放管理平台，提供AI驱动的碳盘查工具、供应链碳足迹核算和Scope 3排放计算。支持CBAM报告、GHG Protocol标准，助力制造业和物流业实现碳中和目标。",
+  description: "Zero Expertise Required - Guided workflows and automated data processing make complex accounting accessible to anyone. Slash Time & Cost - Achieve in days what traditionally takes months, at a fraction of the cost. Audit-Ready Guarantee - Generate reports that adhere to all major frameworks & regulations, including GHG Protocol, ISO 14067, and CBAM.",
   robots: {
     index: process.env.NODE_ENV === 'production',
     follow: process.env.NODE_ENV === 'production'
