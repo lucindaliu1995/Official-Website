@@ -756,7 +756,7 @@ export default function Home() {
                     <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.carbonExpert.stat}
                     </div>
-                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[240px] text-right leading-snug">
                       {t.sections.personas.carbonExpert.statDescription}
                     </p>
                   </div>
@@ -765,7 +765,7 @@ export default function Home() {
                     <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.brandOwner.stat}
                     </div>
-                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[240px] text-right leading-snug">
                       {t.sections.personas.brandOwner.statDescription}
                     </p>
                   </div>
@@ -774,7 +774,7 @@ export default function Home() {
                     <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.supplyChain.stat}
                     </div>
-                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[240px] text-right leading-snug">
                       {t.sections.personas.supplyChain.statDescription}
                     </p>
                   </div>
@@ -788,7 +788,7 @@ export default function Home() {
                     <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.carbonExpert.secondStatDescription}
                     </div>
-                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[240px] text-right leading-snug">
                       {t.sections.personas.carbonExpert.thirdStatDescription}
                     </p>
                   </div>
@@ -797,7 +797,7 @@ export default function Home() {
                     <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.brandOwner.secondStatDescription}
                     </div>
-                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[240px] text-right leading-snug">
                       {t.sections.personas.brandOwner.thirdStatDescription}
                     </p>
                   </div>
@@ -806,7 +806,7 @@ export default function Home() {
                     <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.supplyChain.secondStatDescription}
                     </div>
-                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[240px] text-right leading-snug">
                       {t.sections.personas.supplyChain.thirdStatDescription}
                     </p>
                   </div>
@@ -820,7 +820,7 @@ export default function Home() {
                     <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.carbonExpert.fourthStat}
                     </div>
-                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[240px] text-right leading-snug">
                       {t.sections.personas.carbonExpert.fourthStatDescription}
                     </p>
                   </div>
@@ -829,7 +829,7 @@ export default function Home() {
                     <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.brandOwner.fourthStat}
                     </div>
-                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[240px] text-right leading-snug">
                       {t.sections.personas.brandOwner.fourthStatDescription}
                     </p>
                   </div>
@@ -838,7 +838,7 @@ export default function Home() {
                     <div className="text-[#333333] text-[16px] lg:text-[18px] font-bold leading-tight tracking-[-0.5px]">
                       {t.sections.personas.supplyChain.fourthStat}
                     </div>
-                    <p className="text-[#333333] text-[10px] lg:text-xs font-normal max-w-[200px] text-right leading-tight">
+                    <p className="text-[#333333] text-xs lg:text-sm font-normal max-w-[240px] text-right leading-snug">
                       {t.sections.personas.supplyChain.fourthStatDescription}
                     </p>
                   </div>
@@ -1973,22 +1973,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Privacy Policy Footer */}
-      <footer className="bg-[rgb(0,52,50)] py-8 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-8">
-            <p className="text-white/60 text-sm">
-              © 2024 Climate Seal. All rights reserved.
-            </p>
-            <a 
-              href="/privacy" 
-              className="text-white/60 hover:text-white text-sm transition-colors duration-300 underline hover:no-underline"
-            >
-              {t.footer?.privacyPolicy || 'Privacy Policy'}
-            </a>
-          </div>
-        </div>
-      </footer>
+      {/* Page-level footer removed: using global Footer component instead */}
     </div>
     </>
   );

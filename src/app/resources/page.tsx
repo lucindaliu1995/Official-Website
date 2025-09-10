@@ -72,7 +72,7 @@ export default function SolutionResources() {
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: language === 'zh' ? '首页' : 'Home', item: `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/` },
-            { "@type": "ListItem", position: 2, name: language === 'zh' ? '解决方案资源中心' : 'Solution Resources', item: `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/solution-resources` }
+            { "@type": "ListItem", position: 2, name: language === 'zh' ? '解决方案资源中心' : 'Solution Resources', item: `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/resources` }
           ]
         })}
       </Script>
@@ -188,14 +188,16 @@ export default function SolutionResources() {
                     </span>
                   </div>
                   <h3 className="text-white text-xl font-semibold mb-3 line-clamp-2 group-hover:text-[#9ef894] transition-colors">
-                    {getArticleTitle(article)}
+                    <Link href={`/resources/${article.id}`} className="hover:underline">
+                      {getArticleTitle(article)}
+                    </Link>
                   </h3>
                   <p className="text-white/80 text-sm leading-relaxed line-clamp-3 mb-4">
                     {getArticleExcerpt(article)}
                   </p>
                   <div className="flex items-center justify-between">
                     <Link
-                      href={`/solution-resources/${article.id}`}
+                      href={`/resources/${article.id}`}
                       className="text-[#9ef894] font-medium hover:underline text-sm"
                     >
                       {language === 'zh' ? '阅读更多 →' : 'Read More →'}
@@ -206,7 +208,7 @@ export default function SolutionResources() {
             ))}
 
             {/* Empty State - Placeholder Cards for Market Team */}
-            {filteredArticles.length < 6 && (
+            {process.env.NODE_ENV !== 'production' && filteredArticles.length < 6 && (
               <>
                 {Array.from({ length: 6 - filteredArticles.length }).map((_, index) => (
                   <div
@@ -245,7 +247,8 @@ export default function SolutionResources() {
             )}
           </div>
 
-          {/* Instructions for Market Team */}
+          {/* Instructions for Market Team (dev only) */}
+          {process.env.NODE_ENV !== 'production' && (
           <div className="mt-16 p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
             <h2 className="text-2xl font-semibold text-white mb-4">
               {language === 'zh' ? '📝 市场团队使用指南' : '📝 Marketing Team Guide'}
@@ -277,6 +280,7 @@ export default function SolutionResources() {
               </div>
             </div>
           </div>
+          )}
         </div>
       </section>
 

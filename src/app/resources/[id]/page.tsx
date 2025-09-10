@@ -28,6 +28,8 @@ export default function ArticleDetail() {
   const params = useParams();
   const [article, setArticle] = useState<Article | null>(null);
   const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
+  const [shareUrl, setShareUrl] = useState<string>('');
+  const [canWebShare, setCanWebShare] = useState<boolean>(false);
 
   const articles: Article[] = articlesData.articles;
 
@@ -43,6 +45,22 @@ export default function ArticleDetail() {
       setRelatedArticles(related);
     }
   }, [params.id, articles]);
+
+  // Build share URL with UTM once article is known (client-side)
+  useEffect(() => {
+    if (!article) return;
+    const origin = typeof window !== 'undefined' 
+      ? window.location.origin 
+      : (process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com');
+    const url = new URL(`/resources/${article.id}`, origin);
+    url.searchParams.set('utm_source', 'share');
+    url.searchParams.set('utm_medium', 'article');
+    url.searchParams.set('utm_campaign', 'referral');
+    setShareUrl(url.toString());
+    if (typeof navigator !== 'undefined' && (navigator as any).share) {
+      setCanWebShare(true);
+    }
+  }, [article]);
 
   if (!article) {
     return (
@@ -83,8 +101,8 @@ export default function ArticleDetail() {
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: language === 'zh' ? '首页' : 'Home', item: `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/` },
-            { "@type": "ListItem", position: 2, name: language === 'zh' ? '解决方案资源中心' : 'Solution Resources', item: `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/solution-resources` },
-            { "@type": "ListItem", position: 3, name: getArticleTitle(article), item: `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/solution-resources/${article.id}` }
+            { "@type": "ListItem", position: 2, name: language === 'zh' ? '解决方案资源中心' : 'Solution Resources', item: `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/resources` },
+            { "@type": "ListItem", position: 3, name: getArticleTitle(article), item: `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/resources/${article.id}` }
           ]
         })}
       </Script>
@@ -94,7 +112,7 @@ export default function ArticleDetail() {
           {/* Breadcrumb */}
           <nav className="mb-8">
             <Link 
-              href="/solution-resources" 
+              href="/resources" 
               className="text-[#9ef894] hover:underline text-sm"
             >
               {language === 'zh' ? '← 返回资源中心' : '← Back to Resources'}
@@ -151,11 +169,122 @@ export default function ArticleDetail() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
             <div className="prose prose-lg prose-invert max-w-none">
-              <div className="text-white/90 leading-relaxed whitespace-pre-line">
-                {getArticleContent(article)}
-              </div>
+              {(() => {
+                const raw = getArticleContent(article);
+                let withLinks = raw
+                  .replace(/https?:\/\/[^\s]+/g, (url) => {
+                    const isContact = url.startsWith('https://climate-seal.com/?utm_source=website&utm_medium=article&utm_campaign=basic');
+                    const text = isContact ? 'Contact Us' : url;
+                    return `<a href=\"${url}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-[#9ef894] underline\">${text}</a>`;
+                  }) 
+                  .replace(/^CTA:?\s*/im, '')
+                  .replace(/Ready to simplify[^\n]*\n?/i, '');
+
+                const headings = [
+                  'What is changing',
+                  'Why it matters (for sustainability and business teams)',
+                  'What to do this quarter',
+                  'How Climate Seal helps (right now)',
+                  'Sources',
+                  '到底在改变什么',
+                  '为什么重要（给业务与可持续团队的直白版）',
+                  '本季度建议行动',
+                  'Climate Seal 能帮你什么（现在就能做的）',
+                  '参考资料'
+                ];
+                const escapeReg = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                headings.forEach((h) => {
+                  const re = new RegExp(`(^|\\n)${escapeReg(h)}`, 'g');
+                  withLinks = withLinks.replace(re, (_m, p1) => `${p1}<strong>${h}</strong>`);
+                });
+
+                // Bold key terms (EN & ZH)
+                const keyTerms = [
+                  'ISO', 'GHG Protocol', 'ISO 1406x', 'Corporate/Scope 2/Scope 3', 'Product Carbon Footprint (PCF)', 'ISSB', 'B7', 'COP30',
+                  'strategic partnership', 'dual-logo portfolio', 'joint PCF standard', 'integrated technical process',
+                  'reduce duplication', 'fewer re-baselines', 'clearer audit trails', 'supplier data comparability', 'assurance',
+                  '产品碳足迹', '联合的产品碳足迹标准', '战略合作', '双标识', '一体化技术流程', '审计', '可比性'
+                ];
+                keyTerms.forEach((term) => {
+                  const re = new RegExp(`(?!<strong>)${escapeReg(term)}`, 'gi');
+                  withLinks = withLinks.replace(re, (match) => `<strong>${match}</strong>`);
+                });
+
+                // Bold action phrases at line starts (bullet or numbered) up to colon
+                withLinks = withLinks
+                  .replace(/(^|\n)-\s*([^:\n：]+)(:|：)/g, (_m, p1, p2, p3) => `${p1}- <strong>${p2}</strong>${p3}`)
+                  .replace(/(^|\n)\d+\)\s*([^:\n：]+)(:|：)/g, (_m, p1, p2, p3) => `${p1}<strong>${p2}</strong>${p3}`);
+
+                if (language !== 'zh') {
+                  const contactUrl = 'https://climate-seal.com/?utm_source=website&utm_medium=article&utm_campaign=basic';
+                  const contactAnchor = `<a href=\"${contactUrl}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-[#9ef894] underline\">Contact Us</a>`;
+                  const escapedAnchor = contactAnchor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                  const prompt = 'Ready to simplify your PCFs process? Book a 30-min readiness demo: ';
+                  // 将“Contact Us”前缀文案与链接整体加粗
+                  withLinks = withLinks.replace(new RegExp(escapedAnchor), `<strong>${prompt}${contactAnchor}</strong>`);
+                  // 将首段（至首个空行）整体加粗
+                  withLinks = withLinks.replace(/^[\s\S]*?(?=\n\n)/, (m) => `<strong>${m}</strong>`);
+                }
+
+                return (
+                  <div
+                    className="text-white/90 leading-relaxed whitespace-pre-line"
+                    dangerouslySetInnerHTML={{ __html: withLinks }}
+                  />
+                );
+              })()}
             </div>
           </div>
+
+          {/* Share Actions */}
+          {article && (
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <span className="text-white/70 text-sm">{language === 'zh' ? '分享至：' : 'Share:'}</span>
+              {/* LinkedIn */}
+              <a
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+                target="_blank" rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-sm text-white transition"
+              >LinkedIn</a>
+              {/* Facebook */}
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+                target="_blank" rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-sm text-white transition"
+              >Facebook</a>
+              {/* X/Twitter */}
+              <a
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(getArticleTitle(article))}`}
+                target="_blank" rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-sm text-white transition"
+              >X</a>
+              {/* WhatsApp */}
+              <a
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(getArticleTitle(article) + ' ' + shareUrl)}`}
+                target="_blank" rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-sm text-white transition"
+              >WhatsApp</a>
+              {/* Copy Link */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                    navigator.clipboard.writeText(shareUrl);
+                    alert(language === 'zh' ? '链接已复制' : 'Link copied');
+                  }
+                }}
+                className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-sm text-white transition"
+              >{language === 'zh' ? '复制链接' : 'Copy Link'}</button>
+              {/* Web Share */}
+              {canWebShare && (
+                <button
+                  type="button"
+                  onClick={() => (navigator as any).share({ title: getArticleTitle(article), url: shareUrl })}
+                  className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-sm text-white transition"
+                >{language === 'zh' ? '系统分享' : 'Share'}</button>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
@@ -170,7 +299,7 @@ export default function ArticleDetail() {
               {relatedArticles.map((relatedArticle) => (
                 <Link
                   key={relatedArticle.id}
-                  href={`/solution-resources/${relatedArticle.id}`}
+                  href={`/resources/${relatedArticle.id}`}
                   className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105 group"
                 >
                   <div className="relative h-48 bg-gradient-to-br from-purple-500/20 to-blue-500/20">
