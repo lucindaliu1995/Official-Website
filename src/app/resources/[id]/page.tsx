@@ -146,7 +146,7 @@ export default function ArticleDetail() {
             {article.coverImage ? (
               <Image
                 src={article.coverImage}
-                alt={getArticleTitle(article)}
+                alt={`${getArticleTitle(article)} - cover image`}
                 fill
                 className="object-cover"
                 onError={(e) => {
@@ -322,7 +322,7 @@ export default function ArticleDetail() {
                     {relatedArticle.coverImage && (
                       <Image
                         src={relatedArticle.coverImage}
-                        alt={getArticleTitle(relatedArticle)}
+                        alt={`${getArticleTitle(relatedArticle)} - cover image`}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                         onError={(e) => {

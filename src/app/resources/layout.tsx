@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '解决方案资源中心',
-  description: '精选碳足迹方法、行业洞察与最佳实践，支持企业低碳转型。',
+  description: 'AI Agent产品碳足迹自动化指南。智能LCA计算教程，SBTi报告生成方法。Scope 1/2/3排放分析资源库。',
   alternates: { 
     canonical: '/resources',
     languages: {

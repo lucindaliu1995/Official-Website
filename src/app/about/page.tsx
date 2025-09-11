@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '关于我们',
-  description: 'Climate Seal 团队与愿景：专注环保技术与气候合规的数字化解决方案。',
+  description: 'Climate Seal专业团队，专注AI Agent产品碳足迹自动化。智能LCA技术与SBTi报告生成，零专业知识碳核算解决方案。',
   alternates: { 
     canonical: '/about',
     languages: {
@@ -14,13 +14,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: '关于我们 | Climate Seal',
-    description: 'Climate Seal 团队与愿景：专注环保技术与气候合规的数字化解决方案。',
+    description: 'Climate Seal专业团队，专注AI Agent产品碳足迹自动化。智能LCA技术与SBTi报告生成，零专业知识碳核算解决方案。',
     images: [{ url: '/about-logo.png', width: 1200, height: 630 }]
   },
   twitter: {
     card: 'summary_large_image',
     title: '关于我们 | Climate Seal',
-    description: 'Climate Seal 团队与愿景：专注环保技术与气候合规的数字化解决方案。',
+    description: 'Climate Seal专业团队，专注AI Agent产品碳足迹自动化。智能LCA技术与SBTi报告生成，零专业知识碳核算解决方案。',
     images: ['/about-logo.png']
   }
 };

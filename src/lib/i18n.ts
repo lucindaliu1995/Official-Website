@@ -615,7 +615,7 @@ export const translations: Record<Language, TranslationData> = {
             'Supply-chain companies lack specialized expertise, making compliance costly and burdensome',
             'Endless chasing supply chain data; on-time deliveries only 40-70%',
             'Poor data quality skews decarbonisation priorities',
-            'No ROI or MACC, projects can\'t get green-lit and stalls SBTi / CSRD milestones'
+            'No clear ROI and MACC, decarbonization projects fail to get green‑lit, stalling SBTi and CSRD milestones.'
           ],
           testimonial: '"Climate Seal transformed our supply chain carbon management from a compliance burden into a competitive advantage."',
           author: 'Michael Rodriguez',
@@ -947,24 +947,24 @@ export const translations: Record<Language, TranslationData> = {
       value: {
         cards: {
           cost: {
-            title: '1% Cost',
-            subtitle: 'Cost Reduce',
-            description: 'Less Than $70 Per Credible Report'
+            title: 'Reduce reporting cost to ~1%',
+            subtitle: 'Cost reduce',
+            description: 'For finance and sustainability teams: less than $70 per credible report'
           },
           time: {
-            title: 'Hours',
-            subtitle: 'Time Saving',
-            description: 'From Months To Hours'
+            title: 'From months to hours',
+            subtitle: 'Time saving',
+            description: 'For operations teams: move from multi‑month cycles to hours'
           },
           barrier: {
-            title: 'Zero Barrier',
-            subtitle: 'Zero Experience Requirement',
-            description: 'Any Role Can Create Credible Result'
+            title: 'Zero expertise required',
+            subtitle: 'Zero barrier',
+            description: 'For any role: guided flows produce credible, consistent results'
           },
           trusted: {
-            title: 'Trusted',
-            subtitle: 'Verification Level Credibility',
-            description: 'Virtual Certification Consultant'
+            title: 'Verification‑grade credibility',
+            subtitle: 'Audit-ready',
+            description: 'For compliance & buyers: auditable outputs with evidence'
           }
         }
       },
@@ -1540,24 +1540,24 @@ export const translations: Record<Language, TranslationData> = {
       value: {
         cards: {
           cost: {
-            title: '1%成本',
+            title: '将报告成本降至约1%',
             subtitle: '成本降低',
-            description: '每份可信报告低于70美元'
+            description: '面向财务与可持续团队：每份可信报告低于70美元'
           },
           time: {
-            title: '小时级',
+            title: '从数月到数小时',
             subtitle: '时间节省',
-            description: '从数月到数小时'
+            description: '面向运营团队：将多月周期压缩到小时级'
           },
           barrier: {
-            title: '零门槛',
-            subtitle: '零经验要求',
-            description: '任何角色都能创建可信结果'
+            title: '零经验要求',
+            subtitle: '零门槛',
+            description: '面向任何角色：在引导下生成一致可信的结果'
           },
           trusted: {
-            title: '可信赖',
-            subtitle: '验证级可信度',
-            description: '虚拟认证顾问'
+            title: '验证级可信度',
+            subtitle: '审计就绪',
+            description: '面向合规与买方：附证据链的可审计输出'
           }
         }
       },

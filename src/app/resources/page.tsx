@@ -76,6 +76,22 @@ export default function SolutionResources() {
           ]
         })}
       </Script>
+      {/* JSON-LD: ItemList for article collection */}
+      <Script id="jsonld-itemlist-sr" type="application/ld+json" strategy="afterInteractive">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "itemListElement": (filteredArticles || articles).slice(0, 50).map((a: Article, idx: number) => ({
+            "@type": "ListItem",
+            "position": idx + 1,
+            "url": `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/resources/${a.id}`,
+            "name": language === 'zh' ? a.titleZh : a.title,
+            "image": a.coverImage || `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/logo.jpg`,
+            "datePublished": a.publishDate,
+            "description": language === 'zh' ? a.excerptZh : a.excerpt
+          }))
+        })}
+      </Script>
       <Script id="jsonld-faq-sr" type="application/ld+json" strategy="afterInteractive">
         {JSON.stringify({
           "@context": "https://schema.org",
@@ -149,7 +165,7 @@ export default function SolutionResources() {
                   {article.coverImage && (
                     <Image
                       src={article.coverImage}
-                      alt={getArticleTitle(article)}
+                      alt={`${getArticleTitle(article)} - cover image`}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                       onError={(e) => {

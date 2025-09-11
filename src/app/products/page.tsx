@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '产品与解决方案',
-  description: '产品碳足迹、供应链碳管理、气候合规与报告工具。',
+  description: 'AI Agent产品碳足迹自动化解决方案。智能LCA计算与SBTi报告生成。Scope 1/2/3排放分析，零专业知识碳核算。',
   alternates: { 
     canonical: '/products',
     languages: {
@@ -14,13 +14,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: '产品与解决方案 | Climate Seal',
-    description: '产品碳足迹、供应链碳管理、气候合规与报告工具。',
+    description: 'AI Agent产品碳足迹自动化解决方案。智能LCA计算与SBTi报告生成。Scope 1/2/3排放分析，零专业知识碳核算。',
     images: [{ url: '/pcf-modeler.png', width: 1200, height: 630 }]
   },
   twitter: {
     card: 'summary_large_image',
     title: '产品与解决方案 | Climate Seal',
-    description: '产品碳足迹、供应链碳管理、气候合规与报告工具。',
+    description: 'AI Agent产品碳足迹自动化解决方案。智能LCA计算与SBTi报告生成。Scope 1/2/3排放分析，零专业知识碳核算。',
     images: ['/pcf-modeler.png']
   }
 };

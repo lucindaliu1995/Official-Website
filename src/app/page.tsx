@@ -431,13 +431,17 @@ export default function Home() {
                   const title = t.hero.title;
                   const aiAgent = 'AI Agent for';
                   const pcf = 'Product Carbon Footprint';
-                  const accounting = 'Accounting & Assurance';
-                  if (title.includes(aiAgent) && title.includes(pcf) && title.includes(accounting)) {
+                  // For new title: "AI Agent for Product Carbon Footprint Calculation & Audit‑Ready Reporting"
+                  if (title.includes(aiAgent) && title.includes(pcf)) {
+                    const rest = title
+                      .replace(aiAgent, '')
+                      .replace(pcf, '')
+                      .trim();
                     return (
                       <>
                         <span className="whitespace-nowrap">{aiAgent}</span>{' '}
                         <span className="whitespace-nowrap">{pcf}</span>{' '}
-                        <span>{accounting}</span>
+                        <span>{rest}</span>
                       </>
                     );
                   }
@@ -474,7 +478,7 @@ export default function Home() {
           <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-full lg:min-h-screen order-1 lg:order-2">
             <Image
               src="/polar-bears.png"
-              alt="Polar Bears Swimming"
+              alt="Illustration of polar bears swimming, Climate Seal brand visual"
               fill
               className="object-contain object-center filter drop-shadow-lg"
               priority
@@ -928,28 +932,32 @@ export default function Home() {
                   
                   {/* Dynamic Video - Shows immediately when expanded */}
                   {card.dynamicMediaSrc && activeMobileCard === index && (
-                    <video
-                      key={`video-${index}-${activeMobileCard}`}
-                      src={card.dynamicMediaSrc}
-                      className="absolute inset-0 w-full h-full object-cover opacity-100"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      controls={false}
-                      preload="auto"
-                      onLoadedMetadata={(e) => {
-                        try { 
-                          e.currentTarget.currentTime = 0;
-                          e.currentTarget.play(); 
-                        } catch (_) {}
-                      }}
-                      onCanPlay={(e) => {
-                        try { 
-                          e.currentTarget.play(); 
-                        } catch (_) {}
-                      }}
-                    />
+                    <figure className="absolute inset-0 m-0">
+                      <video
+                        key={`video-${index}-${activeMobileCard}`}
+                        src={card.dynamicMediaSrc}
+                        className="w-full h-full object-cover opacity-100"
+                        title="Feature demo video"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        controls={false}
+                        preload="auto"
+                        onLoadedMetadata={(e) => {
+                          try { 
+                            e.currentTarget.currentTime = 0;
+                            e.currentTarget.play(); 
+                          } catch (_) {}
+                        }}
+                        onCanPlay={(e) => {
+                          try { 
+                            e.currentTarget.play(); 
+                          } catch (_) {}
+                        }}
+                      />
+                      <figcaption className="sr-only">Automated processing demo video.</figcaption>
+                    </figure>
                   )}
                 </div>
                 
@@ -1471,98 +1479,90 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">{t.sections.valueForUser.title}</h2>
           </div>
 
-          {/* Mobile Layout - 2x2 Grid */}
-          <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto sm:hidden">
+          {/* Mobile Layout - Icon Badge Grid */}
+          <div className="grid grid-cols-1 gap-4 max-w-sm mx-auto sm:hidden">
             {/* 1% Cost */}
-            <div className="group bg-[#6366f1] hover:bg-[#5b57f7] rounded-2xl p-3 shadow-xl min-h-[160px] flex flex-col justify-between transition-all duration-300 hover:scale-105 cursor-pointer">
-              <div>
-                <h3 className="text-lg font-bold text-white group-hover:text-yellow-400 mb-2 transition-colors duration-300">{t.sections.value.cards.cost.title}</h3>
-                <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-white group-hover:text-yellow-400 mb-1 transition-colors duration-300">{t.sections.value.cards.cost.subtitle}</h4>
-                  <p className="text-white group-hover:text-yellow-400 opacity-80 group-hover:opacity-100 transition-all duration-300 text-xs">{t.sections.value.cards.cost.description}</p>
-                </div>
+            <article role="article" className="group rounded-2xl p-4 shadow-xl min-h-[140px] flex items-start gap-3 bg-white/5 border border-white/10 backdrop-blur-md">
+              <div className="shrink-0 w-10 h-10 rounded-full bg-white/10 ring-2 ring-[#9ef894]/50 flex items-center justify-center text-[#9ef894]">$</div>
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-white">{t.sections.value.cards.cost.title}</h3>
+                <h4 className="text-xs text-white/80 mt-1">{t.sections.value.cards.cost.subtitle}</h4>
+                <p className="text-xs text-white/60 mt-1">{t.sections.value.cards.cost.description}</p>
               </div>
-            </div>
+            </article>
 
             {/* Hours */}
-            <div className="group bg-[#6366f1] hover:bg-[#5b57f7] rounded-2xl p-3 shadow-xl min-h-[160px] flex flex-col justify-between transition-all duration-300 hover:scale-105 cursor-pointer">
-              <div>
-                <h3 className="text-lg font-bold text-white group-hover:text-yellow-400 mb-2 transition-colors duration-300">{t.sections.value.cards.time.title}</h3>
-                <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-white group-hover:text-yellow-400 mb-1 transition-colors duration-300">{t.sections.value.cards.time.subtitle}</h4>
-                  <p className="text-white group-hover:text-yellow-400 opacity-80 group-hover:opacity-100 transition-all duration-300 text-xs">{t.sections.value.cards.time.description}</p>
-                </div>
+            <article role="article" className="group rounded-2xl p-4 shadow-xl min-h-[140px] flex items-start gap-3 bg-white/5 border border-white/10 backdrop-blur-md">
+              <div className="shrink-0 w-10 h-10 rounded-full bg-white/10 ring-2 ring-[#9ef894]/50 flex items-center justify-center text-[#9ef894]">⏱</div>
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-white">{t.sections.value.cards.time.title}</h3>
+                <h4 className="text-xs text-white/80 mt-1">{t.sections.value.cards.time.subtitle}</h4>
+                <p className="text-xs text-white/60 mt-1">{t.sections.value.cards.time.description}</p>
               </div>
-            </div>
+            </article>
 
             {/* Zero Barrier */}
-            <div className="group bg-[#6366f1] hover:bg-[#5b57f7] rounded-2xl p-3 shadow-xl min-h-[160px] flex flex-col justify-between transition-all duration-300 hover:scale-105 cursor-pointer">
-              <div>
-                <h3 className="text-lg font-bold text-white group-hover:text-yellow-400 mb-2 transition-colors duration-300">{t.sections.value.cards.barrier.title}</h3>
-                <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-white group-hover:text-yellow-400 mb-1 transition-colors duration-300">{t.sections.value.cards.barrier.subtitle}</h4>
-                  <p className="text-white group-hover:text-yellow-400 opacity-80 group-hover:opacity-100 transition-all duration-300 text-xs">{t.sections.value.cards.barrier.description}</p>
-                </div>
+            <article role="article" className="group rounded-2xl p-4 shadow-xl min-h-[140px] flex items-start gap-3 bg-white/5 border border-white/10 backdrop-blur-md">
+              <div className="shrink-0 w-10 h-10 rounded-full bg-white/10 ring-2 ring-[#9ef894]/50 flex items-center justify-center text-[#9ef894]">✓</div>
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-white">{t.sections.value.cards.barrier.title}</h3>
+                <h4 className="text-xs text-white/80 mt-1">{t.sections.value.cards.barrier.subtitle}</h4>
+                <p className="text-xs text-white/60 mt-1">{t.sections.value.cards.barrier.description}</p>
               </div>
-            </div>
+            </article>
 
             {/* Trusted */}
-            <div className="group bg-[#6366f1] hover:bg-[#5b57f7] rounded-2xl p-3 shadow-xl min-h-[160px] flex flex-col justify-between transition-all duration-300 hover:scale-105 cursor-pointer">
-              <div>
-                <h3 className="text-lg font-bold text-white group-hover:text-yellow-400 mb-2 transition-colors duration-300">{t.sections.value.cards.trusted.title}</h3>
-                <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-white group-hover:text-yellow-400 mb-1 transition-colors duration-300">{t.sections.value.cards.trusted.subtitle}</h4>
-                  <p className="text-white group-hover:text-yellow-400 opacity-80 group-hover:opacity-100 transition-all duration-300 text-xs">{t.sections.value.cards.trusted.description}</p>
-                </div>
+            <article role="article" className="group rounded-2xl p-4 shadow-xl min-h-[140px] flex items-start gap-3 bg-white/5 border border-white/10 backdrop-blur-md">
+              <div className="shrink-0 w-10 h-10 rounded-full bg-white/10 ring-2 ring-[#9ef894]/50 flex items-center justify-center text-[#9ef894]">★</div>
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-white">{t.sections.value.cards.trusted.title}</h3>
+                <h4 className="text-xs text-white/80 mt-1">{t.sections.value.cards.trusted.subtitle}</h4>
+                <p className="text-xs text-white/60 mt-1">{t.sections.value.cards.trusted.description}</p>
               </div>
-            </div>
+            </article>
           </div>
 
-          {/* Desktop Layout - Original 1x4 Grid */}
-          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-7xl mx-auto items-end">
+          {/* Desktop Layout - Icon Badge Grid with Glass Cards */}
+          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-7xl mx-auto items-stretch">
             {/* 1% Cost - Card #1 - 15% Increased */}
-            <div className="group bg-[#6366f1] hover:bg-[#5b57f7] rounded-3xl p-6 sm:p-8 shadow-xl min-h-[216px] sm:min-h-[259px] flex flex-col justify-between transition-all duration-300 hover:scale-105 cursor-pointer animate-float-gentle">
-              <div className="flex-1 flex flex-col justify-between">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white group-hover:text-yellow-400 transition-colors duration-300">{t.sections.value.cards.cost.title}</h3>
-                <div className="mt-auto">
-                  <h4 className="text-base sm:text-lg font-semibold text-white group-hover:text-yellow-400 mb-2 transition-colors duration-300">{t.sections.value.cards.cost.subtitle}</h4>
-                  <p className="text-white group-hover:text-yellow-400 opacity-80 group-hover:opacity-100 transition-all duration-300 text-sm sm:text-base">{t.sections.value.cards.cost.description}</p>
-                </div>
+            <article role="article" className="group rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col gap-3 cursor-pointer bg-white/5 border border-white/10 backdrop-blur-md">
+              <div className="shrink-0 w-12 h-12 rounded-full bg-white/10 ring-2 ring-[#9ef894]/50 flex items-center justify-center text-[#9ef894] text-lg">$</div>
+              <h3 className="text-xl sm:text-2xl lg:text-[26px] leading-snug break-words hyphens-auto text-white font-bold">{t.sections.value.cards.cost.title}</h3>
+              <div className="mt-auto">
+                <h4 className="text-base sm:text-lg font-semibold text-white/90 mb-1">{t.sections.value.cards.cost.subtitle}</h4>
+                <p className="text-white/70 text-sm sm:text-base">{t.sections.value.cards.cost.description}</p>
               </div>
-            </div>
+            </article>
 
             {/* Hours - Card #2 - 15% Increased */}
-            <div className="group bg-[#6366f1] hover:bg-[#5b57f7] rounded-3xl p-6 sm:p-8 shadow-xl min-h-[216px] sm:min-h-[259px] flex flex-col justify-between transition-all duration-300 hover:scale-105 cursor-pointer animate-float-gentle-delayed">
-              <div className="flex-1 flex flex-col justify-between">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white group-hover:text-yellow-400 transition-colors duration-300">{t.sections.value.cards.time.title}</h3>
-                <div className="mt-auto">
-                  <h4 className="text-base sm:text-lg font-semibold text-white group-hover:text-yellow-400 mb-2 transition-colors duration-300">{t.sections.value.cards.time.subtitle}</h4>
-                  <p className="text-white group-hover:text-yellow-400 opacity-80 group-hover:opacity-100 transition-all duration-300 text-sm sm:text-base">{t.sections.value.cards.time.description}</p>
-                </div>
+            <article role="article" className="group rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col gap-3 cursor-pointer bg-white/5 border border-white/10 backdrop-blur-md">
+              <div className="shrink-0 w-12 h-12 rounded-full bg-white/10 ring-2 ring-[#9ef894]/50 flex items-center justify-center text-[#9ef894] text-lg">⏱</div>
+              <h3 className="text-xl sm:text-2xl lg:text-[26px] leading-snug break-words hyphens-auto text-white font-bold">{t.sections.value.cards.time.title}</h3>
+              <div className="mt-auto">
+                <h4 className="text-base sm:text-lg font-semibold text-white/90 mb-1">{t.sections.value.cards.time.subtitle}</h4>
+                <p className="text-white/70 text-sm sm:text-base">{t.sections.value.cards.time.description}</p>
               </div>
-            </div>
+            </article>
 
             {/* Zero Barrier - Card #3 - 20% Increased from 25% reduced base */}
-            <div className="group bg-[#6366f1] hover:bg-[#5b57f7] rounded-3xl p-6 sm:p-8 shadow-xl min-h-[252px] sm:min-h-[288px] lg:min-h-[350px] flex flex-col justify-between transition-all duration-300 hover:scale-105 cursor-pointer animate-float-gentle-slow">
-              <div className="flex-1 flex flex-col justify-between">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white group-hover:text-yellow-400 transition-colors duration-300">{t.sections.value.cards.barrier.title}</h3>
-                <div className="mt-auto">
-                  <h4 className="text-base sm:text-lg font-semibold text-white group-hover:text-yellow-400 mb-2 transition-colors duration-300">{t.sections.value.cards.barrier.subtitle}</h4>
-                  <p className="text-white group-hover:text-yellow-400 opacity-80 group-hover:opacity-100 transition-all duration-300 text-sm sm:text-base">{t.sections.value.cards.barrier.description}</p>
-                </div>
+            <article role="article" className="group rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col gap-3 cursor-pointer bg-white/5 border border-white/10 backdrop-blur-md">
+              <div className="shrink-0 w-12 h-12 rounded-full bg-white/10 ring-2 ring-[#9ef894]/50 flex items-center justify-center text-[#9ef894] text-lg">✓</div>
+              <h3 className="text-xl sm:text-2xl lg:text-[26px] leading-snug break-words hyphens-auto text-white font-bold">{t.sections.value.cards.barrier.title}</h3>
+              <div className="mt-auto">
+                <h4 className="text-base sm:text-lg font-semibold text-white/90 mb-1">{t.sections.value.cards.barrier.subtitle}</h4>
+                <p className="text-white/70 text-sm sm:text-base">{t.sections.value.cards.barrier.description}</p>
               </div>
-            </div>
+            </article>
 
             {/* Trusted - Card #4 - 15% Increased */}
-            <div className="group bg-[#6366f1] hover:bg-[#5b57f7] rounded-3xl p-6 sm:p-8 shadow-xl min-h-[216px] sm:min-h-[259px] flex flex-col justify-between transition-all duration-300 hover:scale-105 cursor-pointer animate-float-gentle-smooth">
-              <div className="flex-1 flex flex-col justify-between">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white group-hover:text-yellow-400 transition-colors duration-300">{t.sections.value.cards.trusted.title}</h3>
-                <div className="mt-auto">
-                  <h4 className="text-base sm:text-lg font-semibold text-white group-hover:text-yellow-400 mb-2 transition-colors duration-300">{t.sections.value.cards.trusted.subtitle}</h4>
-                  <p className="text-white group-hover:text-yellow-400 opacity-80 group-hover:opacity-100 transition-all duration-300 text-sm sm:text-base">{t.sections.value.cards.trusted.description}</p>
-                </div>
+            <article role="article" className="group rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col gap-3 cursor-pointer bg-white/5 border border-white/10 backdrop-blur-md">
+              <div className="shrink-0 w-12 h-12 rounded-full bg-[#013432]/20 ring-2 ring-[#013432]/40 flex items-center justify-center text-[#013432] text-lg">★</div>
+              <h3 className="text-xl sm:text-2xl lg:text-[26px] leading-snug break-words hyphens-auto text-white font-bold">{t.sections.value.cards.trusted.title}</h3>
+              <div className="mt-auto">
+                <h4 className="text-base sm:text-lg font-semibold text-white/90 mb-1">{t.sections.value.cards.trusted.subtitle}</h4>
+                <p className="text-white/70 text-sm sm:text-base">{t.sections.value.cards.trusted.description}</p>
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </section>
@@ -1578,78 +1578,87 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col lg:flex-row items-center justify-center max-w-6xl mx-auto gap-6 sm:gap-8">
-            {/* Free Plan Card - Wider and Taller */}
-            <div className="bg-[#6195fe] backdrop-blur-sm p-3 sm:p-7 rounded-2xl shadow-lg border border-blue-300 flex flex-col justify-between h-[200px] sm:h-[500px] w-full lg:w-1/3 transform lg:scale-105">
+            {/* Free Plan Card - Enhanced Design */}
+            <div className="bg-[#F4F1E9] backdrop-blur-sm p-3 sm:p-7 rounded-2xl shadow-2xl border-2 border-[#9bccce] flex flex-col justify-between h-[200px] sm:h-[500px] w-full lg:w-1/3 transform lg:scale-105 hover:shadow-3xl hover:-translate-y-1 transition-all duration-300">
               <div>
                 <div className="h-2 sm:h-8 mb-1 sm:mb-4"></div>
                 <h3 className="text-base sm:text-2xl font-semibold mb-1 sm:mb-2 text-gray-800 text-center">{t.sections.pricing.plans.free.title}</h3>
                 <p className="text-xs sm:text-sm text-gray-600 text-center mb-2 sm:mb-4">{t.sections.pricing.plans.free.description}</p>
                 <div className="mb-2 sm:mb-6 text-center">
-                  <span className="text-xl sm:text-4xl font-bold text-gray-800">{t.sections.pricing.plans.free.price}</span>
+                  <span className="text-xl sm:text-4xl font-bold text-[#013432]">{t.sections.pricing.plans.free.price}</span>
                   <span className="text-gray-600 text-xs sm:text-base">/month</span>
                 </div>
                 <div className="min-h-[35px] sm:min-h-[120px]">
                   <ul className="space-y-0.5 sm:space-y-3 text-gray-700 text-xs sm:text-sm">
                     {t.sections.pricing.plans.free.features.map((feature, index) => (
-                      <li key={index}>✓ {feature}</li>
+                      <li key={index} className="flex items-start">
+                        <span className="text-[#9bccce] mr-2 mt-0.5">✓</span>
+                        <span>{feature}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               </div>
-              <a 
+              <a
                 href="#contact"
-                className="w-full bg-gray-800 hover:bg-gray-700 text-white py-1 sm:py-3 rounded-lg font-semibold transition duration-300 text-xs sm:text-base text-center block"
+                className="w-full bg-[#9bccce] hover:bg-[#7ed080] text-[#013432] hover:text-white py-1 sm:py-3 rounded-lg font-semibold transition-all duration-300 text-xs sm:text-base text-center block"
               >
                 {t.sections.pricing.plans.free.button}
               </a>
             </div>
 
-            {/* Standard Plan Card - Narrower */}
-            <div className="bg-[#9ef894] backdrop-blur-sm p-4 sm:p-9 rounded-2xl shadow-xl transform lg:scale-105 border border-[#8ee884] flex flex-col justify-between h-[200px] sm:h-[500px] w-full lg:w-1/3">
+            {/* Standard Plan Card - Enhanced Design */}
+            <div className="bg-[#F4F1E9] backdrop-blur-sm p-4 sm:p-9 rounded-2xl shadow-2xl transform lg:scale-105 border-2 border-[#7ed080] flex flex-col justify-between h-[200px] sm:h-[500px] w-full lg:w-1/3 hover:shadow-3xl hover:-translate-y-1 transition-all duration-300">
               <div>
                 <div className="h-2 sm:h-8 mb-1 sm:mb-4"></div>
                 <h3 className="text-base sm:text-2xl font-semibold mb-1 sm:mb-2 text-gray-800 text-center">{t.sections.pricing.plans.standard.title}</h3>
                 <p className="text-xs sm:text-sm text-gray-600 text-center mb-2 sm:mb-4">{t.sections.pricing.plans.standard.description}</p>
                 <div className="mb-2 sm:mb-6 text-center">
-                  <span className="text-xl sm:text-4xl font-bold text-gray-800">{t.sections.pricing.plans.standard.price}</span>
+                  <span className="text-xl sm:text-4xl font-bold text-[#013432]">{t.sections.pricing.plans.standard.price}</span>
                   <span className="text-gray-600 text-xs sm:text-base">/report</span>
                 </div>
                 <div className="min-h-[35px] sm:min-h-[120px]">
                   <ul className="space-y-0.5 sm:space-y-3 text-gray-700 text-xs sm:text-sm">
                     {t.sections.pricing.plans.standard.features.map((feature, index) => (
-                      <li key={index}>✓ {feature}</li>
+                      <li key={index} className="flex items-start">
+                        <span className="text-[#7ed080] mr-2 mt-0.5">✓</span>
+                        <span>{feature}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               </div>
-              <a 
+              <a
                 href="#contact"
-                className="w-full bg-gray-800 hover:bg-gray-700 text-white py-1 sm:py-3 rounded-lg font-semibold transition duration-300 text-xs sm:text-base text-center block"
+                className="w-full bg-[#7ed080] hover:bg-[#013432] text-[#013432] hover:text-white py-1 sm:py-3 rounded-lg font-semibold transition-all duration-300 text-xs sm:text-base text-center block"
               >
                 {t.sections.pricing.plans.standard.button}
               </a>
             </div>
 
-            {/* Enterprise Plan Card - Wider and Taller */}
-            <div className="bg-[#98a2f8] backdrop-blur-sm p-3 sm:p-7 rounded-2xl shadow-lg border border-purple-300 flex flex-col justify-between h-[200px] sm:h-[500px] w-full lg:w-1/3 transform lg:scale-105">
+            {/* Enterprise Plan Card - Enhanced Design */}
+            <div className="bg-[#F4F1E9] backdrop-blur-sm p-3 sm:p-7 rounded-2xl shadow-2xl border-2 border-[#013432] flex flex-col justify-between h-[200px] sm:h-[500px] w-full lg:w-1/3 transform lg:scale-105 hover:shadow-3xl hover:-translate-y-1 transition-all duration-300">
               <div>
                 <div className="h-2 sm:h-8 mb-1 sm:mb-4"></div>
                 <h3 className="text-base sm:text-2xl font-semibold mb-1 sm:mb-2 text-gray-800 text-center">{t.sections.pricing.plans.enterprise.title}</h3>
                 <p className="text-xs sm:text-sm text-gray-600 text-center mb-2 sm:mb-4">{t.sections.pricing.plans.enterprise.description}</p>
                 <div className="mb-2 sm:mb-6 text-center">
-                  <span className="text-xl sm:text-4xl font-bold text-gray-800">{t.sections.pricing.plans.enterprise.price}</span>
+                  <span className="text-xl sm:text-4xl font-bold text-[#013432]">{t.sections.pricing.plans.enterprise.price}</span>
                 </div>
                 <div className="min-h-[35px] sm:min-h-[120px]">
                   <ul className="space-y-0.5 sm:space-y-3 text-gray-700 text-xs sm:text-sm">
                     {t.sections.pricing.plans.enterprise.features.map((feature, index) => (
-                      <li key={index}>✓ {feature}</li>
+                      <li key={index} className="flex items-start">
+                        <span className="text-[#013432] mr-2 mt-0.5">✓</span>
+                        <span>{feature}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               </div>
-              <a 
+              <a
                 href="#contact"
-                className="w-full bg-gray-800 hover:bg-gray-700 text-white py-1 sm:py-3 rounded-lg font-semibold transition duration-300 text-xs sm:text-base text-center block"
+                className="w-full bg-[#013432] hover:bg-[#7ed080] text-white hover:text-[#013432] py-1 sm:py-3 rounded-lg font-semibold transition-all duration-300 text-xs sm:text-base text-center block"
               >
                 {t.sections.pricing.plans.enterprise.button}
               </a>
@@ -1671,7 +1680,7 @@ export default function Home() {
             <div className="relative h-[250px] sm:h-[350px] md:h-[400px] lg:h-[500px] xl:h-[600px] rounded-2xl overflow-hidden lg:pl-40 order-2 lg:order-1" style={{transform: 'translateY(0cm)'}}>
               <Image
                 src="/polar-bears.png"
-                alt="Polar Bears on Ice"
+                alt="Illustration of polar bears on ice, Climate Seal brand visual"
                 fill
                 className="object-cover object-center"
                 quality={100}
@@ -1778,6 +1787,39 @@ export default function Home() {
           </svg>
         </div>
       </div>
+
+      {/* FAQ (compact) */}
+      <section id="faq" className="bg-[rgb(0,52,50)] py-12 sm:py-16">
+        <div className="max-w-5xl mx-auto px-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 sm:mb-8 text-center">{language === 'zh' ? '常见问题' : 'FAQ'}</h2>
+          <div className="space-y-3">
+            {/* Item 1 */}
+            <details className="group rounded-xl bg-white/5 border border-white/10 p-4">
+              <summary className="cursor-pointer list-none flex items-center justify-between text-white font-semibold">{language === 'zh' ? '需要准备哪些数据？' : 'What data do I need to start?'}
+                <span className="transition-transform group-open:rotate-180 text-white/70">⌄</span>
+              </summary>
+              <div className="mt-2 text-white/80 text-sm">{language === 'zh' ? '产品基本信息、BOM清单（如有）、能耗/物流等基础数据。有数据即可开始，没有也可先生成草稿模型。' : 'Basic product info, BOM if available, and energy/logistics data. You can start with partial data and refine later.'}</div>
+            </details>
+            {/* Item 2 */}
+            <details className="group rounded-xl bg-white/5 border border-white/10 p-4">
+              <summary className="cursor-pointer list-none flex items-center justify-between text-white font-semibold">{language === 'zh' ? '多久能拿到审计就绪报告？' : 'How fast to get an audit‑ready report?'}
+                <span className="transition-transform group-open:rotate-180 text-white/70">⌄</span>
+              </summary>
+              <div className="mt-2 text-white/80 text-sm">{language === 'zh' ? '小时级输出：典型在4–48小时，取决于数据完整度与复杂度。' : 'Hours, typically 4–48 hours depending on data completeness and complexity.'}</div>
+            </details>
+            {/* Item 3 */}
+            <details className="group rounded-xl bg-white/5 border border-white/10 p-4">
+              <summary className="cursor-pointer list-none flex items-center justify-between text-white font-semibold">{language === 'zh' ? '是否与SBTi/ISO 14067对齐？' : 'Is it aligned with SBTi / ISO 14067?'}
+                <span className="transition-transform group-open:rotate-180 text-white/70">⌄</span>
+              </summary>
+              <div className="mt-2 text-white/80 text-sm">{language === 'zh' ? '是。方法学基于LCA，输出对齐GHG Protocol、ISO 14067，并提供可审计证据链。' : 'Yes. LCA‑based methodology with outputs aligned to GHG Protocol and ISO 14067, including auditable evidence trails.'}</div>
+            </details>
+          </div>
+          <div className="text-center mt-6">
+            <a href="/faq" className="inline-block px-6 py-3 rounded-full bg-[#9ef894] text-black font-medium">{language === 'zh' ? '查看更多问题' : 'View all FAQs'}</a>
+          </div>
+        </div>
+      </section>
 
       {/* Contact Section */}
       <section id="contact" className="py-8 sm:py-10 bg-[rgb(0,52,50)] text-white" data-theme="contact" data-section="contact-form" data-category="conversion">

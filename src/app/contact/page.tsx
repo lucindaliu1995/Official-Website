@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '联系我们',
-  description: '获取产品演示与咨询，了解如何快速启动碳足迹与合规管理。',
+  description: '免费试用AI Agent产品碳足迹自动化。智能LCA计算演示，SBTi报告生成咨询。Scope 1/2/3排放分析支持服务。',
   alternates: { 
     canonical: '/contact',
     languages: {
@@ -14,13 +14,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: '联系我们 | Climate Seal',
-    description: '获取产品演示与咨询，了解如何快速启动碳足迹与合规管理。',
+    description: '免费试用AI Agent产品碳足迹自动化。智能LCA计算演示，SBTi报告生成咨询。Scope 1/2/3排放分析支持服务。',
     images: [{ url: '/new-contact-logo.png', width: 1200, height: 630 }]
   },
   twitter: {
     card: 'summary_large_image',
     title: '联系我们 | Climate Seal',
-    description: '获取产品演示与咨询，了解如何快速启动碳足迹与合规管理。',
+    description: '免费试用AI Agent产品碳足迹自动化。智能LCA计算演示，SBTi报告生成咨询。Scope 1/2/3排放分析支持服务。',
     images: ['/new-contact-logo.png']
   }
 };

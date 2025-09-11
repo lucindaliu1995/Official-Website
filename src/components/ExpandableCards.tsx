@@ -38,19 +38,23 @@ function AutoVideo({ src, className }: { src: string; className?: string }) {
     return () => io.disconnect();
   }, [ref]);
   return (
-    <video
-      ref={setRef}
-      src={src}
-      className={className}
-      autoPlay
-      muted
-      loop
-      playsInline
-      style={{
-        objectFit: 'cover',
-        objectPosition: 'center'
-      }}
-    />
+    <figure className="m-0">
+      <video
+        ref={setRef}
+        src={src}
+        className={className}
+        title="AI agent demo video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          objectFit: 'cover',
+          objectPosition: 'center'
+        }}
+      />
+      <figcaption className="sr-only">Short demo of automated modeling and one‑click report generation.</figcaption>
+    </figure>
   );
 }
 
@@ -167,7 +171,7 @@ export default function ExpandableCards({
                     return (
                       <img 
                         src={currentMediaSrc} 
-                        alt="" 
+                        alt={it.title || 'feature image'} 
                         className="h-full w-full object-cover" 
                         style={{ objectPosition }} 
                       />

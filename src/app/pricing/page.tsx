@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '价格方案',
-  description: '灵活透明的订阅与企业方案，满足不同阶段的碳管理需求。',
+  description: 'AI Agent产品碳足迹自动化定价。免费试用智能LCA计算，企业级SBTi报告生成。Scope 1/2/3排放分析订阅方案。',
   alternates: { 
     canonical: '/pricing',
     languages: {
@@ -14,13 +14,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: '价格方案 | Climate Seal',
-    description: '灵活透明的订阅与企业方案，满足不同阶段的碳管理需求。',
+    description: 'AI Agent产品碳足迹自动化定价。免费试用智能LCA计算，企业级SBTi报告生成。Scope 1/2/3排放分析订阅方案。',
     images: [{ url: '/goal-manager.png', width: 1200, height: 630 }]
   },
   twitter: {
     card: 'summary_large_image',
     title: '价格方案 | Climate Seal',
-    description: '灵活透明的订阅与企业方案，满足不同阶段的碳管理需求。',
+    description: 'AI Agent产品碳足迹自动化定价。免费试用智能LCA计算，企业级SBTi报告生成。Scope 1/2/3排放分析订阅方案。',
     images: ['/goal-manager.png']
   }
 };

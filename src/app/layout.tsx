@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     default: "AI Agent for Product Carbon Footprint Accounting & Assurance | Climate Seal",
     template: "%s | Climate Seal"
   },
-  description: "Zero Expertise Required - Guided workflows and automated data processing make complex accounting accessible to anyone. Slash Time & Cost - Achieve in days what traditionally takes months, at a fraction of the cost. Audit-Ready Guarantee - Generate reports that adhere to all major frameworks & regulations, including GHG Protocol, ISO 14067, and CBAM.",
+  description: "AI Agent for product carbon footprint automation. Automated LCA calculation & SBTi report generation. Scope 1/2/3 emissions analysis with intelligent data processing. Zero-expertise carbon accounting.",
   robots: {
     index: process.env.NODE_ENV === 'production',
     follow: process.env.NODE_ENV === 'production'
