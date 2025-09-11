@@ -5,7 +5,13 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: '关于我们',
   description: 'Climate Seal 团队与愿景：专注环保技术与气候合规的数字化解决方案。',
-  alternates: { canonical: '/about' },
+  alternates: { 
+    canonical: '/about',
+    languages: {
+      en: '/about?lang=en',
+      zh: '/about?lang=zh'
+    }
+  },
   openGraph: {
     title: '关于我们 | Climate Seal',
     description: 'Climate Seal 团队与愿景：专注环保技术与气候合规的数字化解决方案。',

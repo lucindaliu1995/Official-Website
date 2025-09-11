@@ -5,7 +5,13 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: '联系我们',
   description: '获取产品演示与咨询，了解如何快速启动碳足迹与合规管理。',
-  alternates: { canonical: '/contact' },
+  alternates: { 
+    canonical: '/contact',
+    languages: {
+      en: '/contact?lang=en',
+      zh: '/contact?lang=zh'
+    }
+  },
   openGraph: {
     title: '联系我们 | Climate Seal',
     description: '获取产品演示与咨询，了解如何快速启动碳足迹与合规管理。',

@@ -28,8 +28,8 @@ export default function Home() {
   const [isScrolling, setIsScrolling] = useState(false);
   const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [activePersona, setActivePersona] = useState<'carbonExpert' | 'brandOwner' | 'supplyChain'>('carbonExpert');
-  const [activeAIRole, setActiveAIRole] = useState<'carbonExpert' | 'brandOwner' | 'supplyChain'>('carbonExpert');
+  const [activePersona, setActivePersona] = useState<'carbonExpert' | 'brandOwner' | 'supplyChain'>('brandOwner');
+  const [activeAIRole, setActiveAIRole] = useState<'carbonExpert' | 'brandOwner' | 'supplyChain'>('brandOwner');
   const [activeMobileCard, setActiveMobileCard] = useState<number>(-1);
 
   // Generate cards data for current role
@@ -514,7 +514,7 @@ export default function Home() {
           <div className="flex justify-center mb-8">
             <div className="bg-white/5 rounded-full p-1">
               <div className="flex">
-                {(['carbonExpert', 'brandOwner', 'supplyChain'] as const).map((persona) => (
+                {(['brandOwner', 'supplyChain', 'carbonExpert'] as const).map((persona) => (
                   <button
                     key={persona}
                     onClick={() => setActivePersona(persona)}
@@ -620,7 +620,7 @@ export default function Home() {
           <div className="flex justify-center mb-8">
             <div className="bg-white/5 rounded-[1600px] p-1 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)]">
               <div className="relative flex">
-                {(['carbonExpert', 'brandOwner', 'supplyChain'] as const).map((persona, index) => (
+                {(['brandOwner', 'supplyChain', 'carbonExpert'] as const).map((persona, index) => (
                   <button
                     key={persona}
                     onClick={() => setActivePersona(persona)}
@@ -869,7 +869,7 @@ export default function Home() {
           <div className="flex justify-center mb-6">
             <div className="bg-white/5 rounded-full p-1">
               <div className="flex">
-                {(['carbonExpert', 'brandOwner', 'supplyChain'] as const).map((role) => (
+                {(['brandOwner', 'supplyChain', 'carbonExpert'] as const).map((role) => (
                   <button
                     key={role}
                     onClick={() => {
@@ -1019,7 +1019,7 @@ export default function Home() {
           <div className="flex justify-center mb-8">
             <div className="bg-white/5 rounded-[1600px] p-1 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)]">
               <div className="relative flex">
-                {(['carbonExpert', 'brandOwner', 'supplyChain'] as const).map((role, index) => (
+                {(['brandOwner', 'supplyChain', 'carbonExpert'] as const).map((role, index) => (
                   <button
                     key={role}
                     onClick={() => setActiveAIRole(role)}

@@ -5,7 +5,13 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: '价格方案',
   description: '灵活透明的订阅与企业方案，满足不同阶段的碳管理需求。',
-  alternates: { canonical: '/pricing' },
+  alternates: { 
+    canonical: '/pricing',
+    languages: {
+      en: '/pricing?lang=en',
+      zh: '/pricing?lang=zh'
+    }
+  },
   openGraph: {
     title: '价格方案 | Climate Seal',
     description: '灵活透明的订阅与企业方案，满足不同阶段的碳管理需求。',

@@ -3,7 +3,13 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: '解决方案资源中心',
   description: '精选碳足迹方法、行业洞察与最佳实践，支持企业低碳转型。',
-  alternates: { canonical: '/solution-resources' }
+  alternates: { 
+    canonical: '/resources',
+    languages: {
+      en: '/resources?lang=en',
+      zh: '/resources?lang=zh'
+    }
+  }
 };
 
 export default function SolutionResourcesLayout({

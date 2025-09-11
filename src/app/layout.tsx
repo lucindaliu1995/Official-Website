@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
     languages: {
-      en: "/",
-      zh: "/"
+      en: "/?lang=en",
+      zh: "/?lang=zh"
     }
   },
   keywords: [

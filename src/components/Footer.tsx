@@ -14,7 +14,7 @@ const Footer = () => {
             aria-label="LinkedIn"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white hover:bg-gray-100 transition-colors"
           >
             {/* LinkedIn SVG */}
             <svg
