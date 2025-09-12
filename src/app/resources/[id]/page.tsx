@@ -99,8 +99,11 @@ export default function ArticleDetail() {
     // Normalize line endings
     let text = raw.replace(/\r\n?/g, '\n');
 
-    // Convert [text](url)
+    // Convert [text](url). Keep in-page anchors (#...) without target=_blank
     text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label, url) => {
+      if (typeof url === 'string' && url.startsWith('#')) {
+        return `<a href="${url}" class="${linkClass}">${label}</a>`;
+      }
       return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${linkClass}">${label}</a>`;
     });
 
