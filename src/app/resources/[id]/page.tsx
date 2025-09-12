@@ -92,6 +92,102 @@ export default function ArticleDetail() {
       : date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
+  // Very small markdown renderer for our article content
+  const renderMarkdown = (raw: string): string => {
+    const linkClass = 'text-[#9ef894] underline hover:text-[#7dd87d] transition-colors';
+
+    // Normalize line endings
+    let text = raw.replace(/\r\n?/g, '\n');
+
+    // Convert [text](url)
+    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label, url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${linkClass}">${label}</a>`;
+    });
+
+    // Convert inline code `code`
+    text = text.replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 rounded bg-white/10 text-white">$1</code>');
+
+    // Bold and italic (do bold first)
+    text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+    // Horizontal rule ---
+    text = text.replace(/^---$/gm, '<hr class="my-10 border-white/20" />');
+
+    const lines = text.split('\n');
+    const html: string[] = [];
+    let inUL = false;
+    let inOL = false;
+    let inBlockquote = false;
+    const closeLists = () => {
+      if (inUL) { html.push('</ul>'); inUL = false; }
+      if (inOL) { html.push('</ol>'); inOL = false; }
+    };
+    const closeBlockquote = () => { if (inBlockquote) { html.push('</blockquote>'); inBlockquote = false; } };
+    const slugify = (s: string) => s
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+
+    for (let i = 0; i < lines.length; i += 1) {
+      const line = lines[i];
+
+      // Headings ##, ### (we mainly use ##)
+      const hMatch = line.match(/^(#{1,6})\s+(.+)$/);
+      if (hMatch) {
+        closeLists();
+        closeBlockquote();
+        const level = Math.min(6, hMatch[1].length);
+        const content = hMatch[2].trim();
+        const id = slugify(content);
+        const cls = 'text-2xl md:text-3xl font-bold text-white mb-6 mt-12 first:mt-0';
+        html.push(`<h${level} id="${id}" class="${cls}">${content}</h${level}>`);
+        continue;
+      }
+
+      // Blockquote
+      if (/^>\s?/.test(line)) {
+        closeLists();
+        if (!inBlockquote) { html.push('<blockquote class="border-l-4 border-white/30 pl-4 italic text-white/90 my-6">'); inBlockquote = true; }
+        html.push(line.replace(/^>\s?/, ''));
+        continue;
+      } else {
+        closeBlockquote();
+      }
+
+      // Unordered list -
+      if (/^\s*-\s+/.test(line)) {
+        if (!inUL) { closeBlockquote(); closeLists(); html.push('<ul class="list-disc pl-6 my-4 space-y-2">'); inUL = true; }
+        html.push(`<li>${line.replace(/^\s*-\s+/, '')}</li>`);
+        continue;
+      }
+
+      // Ordered list 1) pattern
+      if (/^\s*\d+\)\s+/.test(line)) {
+        if (!inOL) { closeBlockquote(); closeLists(); html.push('<ol class="list-decimal pl-6 my-4 space-y-2">'); inOL = true; }
+        html.push(`<li>${line.replace(/^\s*\d+\)\s+/, '')}</li>`);
+        continue;
+      }
+
+      // Blank line -> close lists and emit paragraph break
+      if (/^\s*$/.test(line)) {
+        closeLists();
+        html.push('');
+        continue;
+      }
+
+      // Regular paragraph
+      closeLists();
+      html.push(`<p class="text-white/90 text-lg leading-relaxed mb-6">${line}</p>`);
+    }
+
+    closeLists();
+    closeBlockquote();
+    return html.join('\n');
+  };
+
   return (
     <div className="min-h-screen bg-[rgb(0,52,50)]">
       {/* JSON-LD: Breadcrumb（仅元信息，不渲染 UI）*/}
@@ -171,51 +267,13 @@ export default function ArticleDetail() {
             <div className="prose prose-xl prose-invert max-w-none">
               {(() => {
                 const raw = getArticleContent(article);
-                let withLinks = raw
-                  .replace(/https?:\/\/[^\s]+/g, (url) => {
-                    const isContact = url.startsWith('https://climate-seal.com/?utm_source=website&utm_medium=article&utm_campaign=basic');
-                    const text = isContact ? 'Contact Us' : url;
-                    return `<a href=\"${url}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-[#9ef894] underline hover:text-[#7dd87d] transition-colors\">${text}</a>`;
-                  }) 
-                  .replace(/^CTA:?\s*/im, '')
-                  .replace(/Ready to simplify[^\n]*\n?/i, '');
-
-                // Simple heading styling without borders
-                const headings = [
-                  'What is changing',
-                  'Why it matters (for sustainability and business teams)',
-                  'What to do this quarter',
-                  'How Climate Seal helps (right now)',
-                  '到底在改变什么',
-                  '为什么重要（给业务与可持续团队的直白版）',
-                  '本季度建议行动',
-                  'Climate Seal 能帮你什么（现在就能做的）'
-                ];
-                const escapeReg = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                headings.forEach((h) => {
-                  const re = new RegExp(`(^|\\n)${escapeReg(h)}`, 'g');
-                  withLinks = withLinks.replace(re, (_m, p1) => `${p1}<h2 class="text-2xl md:text-3xl font-bold text-white mb-6 mt-12 first:mt-0">${h}</h2>`);
-                });
-
-                // Simple paragraph styling - only wrap non-heading content
-                withLinks = withLinks.replace(/\n\n/g, '</p><p class="text-white/90 text-lg leading-relaxed mb-6">');
-                // Only wrap in paragraph if it doesn't start with a heading
-                if (!withLinks.startsWith('<h2')) {
-                  withLinks = `<p class="text-white/90 text-lg leading-relaxed mb-6">${withLinks}</p>`;
-                }
-
-                if (language !== 'zh') {
-                  const contactUrl = 'https://climate-seal.com/?utm_source=website&utm_medium=article&utm_campaign=basic';
-                  const contactAnchor = `<a href=\"${contactUrl}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-[#9ef894] underline hover:text-[#7dd87d] transition-colors\">Contact Us</a>`;
-                  const escapedAnchor = contactAnchor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                  const prompt = 'Ready to simplify your PCFs process? Book a 30-min readiness demo: ';
-                  withLinks = withLinks.replace(new RegExp(escapedAnchor), `<p class="text-white/90 text-lg leading-relaxed mb-6"><strong>${prompt}${contactAnchor}</strong></p>`);
-                }
-
+                // Remove explicit CTA label lines; we'll render CTA via links inside content if any
+                const cleaned = raw.replace(/^CTA:?\s*$/gim, '');
+                const html = renderMarkdown(cleaned);
                 return (
                   <div
                     className="text-white/90 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: withLinks }}
+                    dangerouslySetInnerHTML={{ __html: html }}
                   />
                 );
               })()}
