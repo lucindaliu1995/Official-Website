@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Script from 'next/script';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -36,19 +36,21 @@ export default function SolutionResources() {
   const articles: Article[] = articlesData.articles;
   const categories: Category[] = articlesData.categories;
 
-  // Hide empty/placeholder articles from viewers
-  const isMeaningfulArticle = (article: Article) => {
-    const contentEn = (article.content || '').trim();
-    const contentZh = (article.contentZh || '').trim();
-    const excerptEn = (article.excerpt || '').trim();
-    const excerptZh = (article.excerptZh || '').trim();
-    const combined = `${contentEn}\n${contentZh}\n${excerptEn}\n${excerptZh}`;
-    const looksPlaceholder = /This is a sample article|This is another sample article|这是示例文章内容|示例文章|示例文章内容|这是另一个关于/i.test(combined);
-    const minLen = 120; // require some substance in either language
-    const hasSubstance = contentEn.length >= minLen || contentZh.length >= minLen;
-    return !looksPlaceholder && hasSubstance;
-  };
-  const meaningfulArticles = articles.filter(isMeaningfulArticle);
+  // Hide empty/placeholder articles from viewers (memoized to avoid re-creating on each render)
+  const meaningfulArticles = useMemo(() => {
+    const isMeaningful = (article: Article) => {
+      const contentEn = (article.content || '').trim();
+      const contentZh = (article.contentZh || '').trim();
+      const excerptEn = (article.excerpt || '').trim();
+      const excerptZh = (article.excerptZh || '').trim();
+      const combined = `${contentEn}\n${contentZh}\n${excerptEn}\n${excerptZh}`;
+      const looksPlaceholder = /This is a sample article|This is another sample article|这是示例文章内容|示例文章|示例文章内容|这是另一个关于/i.test(combined);
+      const minLen = 120; // require some substance in either language
+      const hasSubstance = contentEn.length >= minLen || contentZh.length >= minLen;
+      return !looksPlaceholder && hasSubstance;
+    };
+    return articles.filter(isMeaningful);
+  }, [articles]);
 
   useEffect(() => {
     if (selectedCategory === 'all') {
