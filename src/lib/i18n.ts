@@ -548,6 +548,23 @@ export interface TranslationData {
       };
     };
   };
+
+  // FAQ 页面
+  faq: {
+    title: string;
+    seo: {
+      title: string;
+      description: string;
+      indexable: boolean;
+    };
+    groups: Array<{
+      name: string;
+      items: Array<{
+        q: string;
+        a: string[];
+      }>;
+    }>;
+  };
 }
 
 // 英文翻译
@@ -1142,6 +1159,104 @@ export const translations: Record<Language, TranslationData> = {
         }
       }
     }
+    ,
+    faq: {
+      title: 'Frequently Asked Questions',
+      seo: {
+        title: 'FAQ | Climate Seal',
+        description: 'Common questions about product, features, pricing, and support.',
+        indexable: true,
+      },
+      groups: [
+        {
+          name: 'Product',
+          items: [
+            {
+              q: 'What are some common use cases?',
+              a: [
+                'Brand tenders require suppliers to provide PCF documentation; exporting goods to other countries or regions necessitates disclosure of PCF. Scenarios such as carbon taxes, batteries, and DPP (Digital Product Passport) also rely on PCF as foundational support.'
+              ]
+            },
+            {
+              q: 'What does Climate Seal do? How is it different from traditional consulting?',
+              a: [
+                'An AI-integrated platform for product carbon footprint (PCF) calculation and compliance delivery. It automates BOM cleansing, factor matching, computation, risk assessment, and audit evidence packaging. Results are delivered in hours—compared to weeks or months for consulting projects—while reducing costs by over 90%.'
+              ]
+            },
+            {
+              q: 'What data is required to get started? Is it difficult?',
+              a: [
+                'Three minimum inputs are sufficient: product specifications/BOM/energy consumption/logistics. Missing items can be temporarily filled with industry defaults or similar processes, with assumptions and uncertainties clearly labeled. The system provides wizard-style templates, unit validation, and auto-completion. When data is incomplete, it guides users to data owners and helps them understand formats and requirements for low-barrier data acquisition.'
+              ]
+            },
+            {
+              q: 'How quickly can the first result be obtained? What factors affect accuracy?',
+              a: [
+                'From importing the three inputs to generating results takes approximately 1–2 hours; including risk assessment and corrections, the total time is about 2–4 hours. For supply chain carbon management, the timeline depends on supplier count and product complexity. We first cover the top 80% of emission contributors, then iterate on the long tail. Accuracy primarily depends on the completeness of BOM and energy consumption data, and the clarity of understanding of your operations.'
+              ]
+            },
+            {
+              q: 'How to account for Scope 3 Category 1 (purchased goods and services)?',
+              a: [
+                'Follow the route: supplier-specific preference → hybrid method → average factor → expenditure-based (EEIO) as fallback; use a cradle-to-gate boundary; clearly delineate Categories 2/4/5 to prevent double counting; assign DQR and uncertainty to each procurement line, allowing recalculation when better data becomes available.'
+              ]
+            },
+            {
+              q: 'Are the results reliable? Can they be audited/verified?',
+              a: [
+                'Aligned with ISO 14067, featuring built-in DQR scoring, risk analysis, uncertainty assessment, and data lineage. One-click export of audit packages supports third-party verification (SGS/BSI/TÜV, etc.).'
+              ]
+            },
+            {
+              q: 'Can BOMs be imported in bulk and automatically matched to factors?',
+              a: [
+                'Supports Excel/CSV batch import (handles BOMs with hundreds of rows). The system performs multi-level parsing, unit normalization, and specification extraction, using rules and AI for bulk factor matching (with configurable confidence thresholds and manual review queues).'
+              ]
+            },
+            {
+              q: 'What are the deliverables and formats? Can they meet CBAM/PEF/EPD/DPP requirements?',
+              a: [
+                'Outputs include PDF reports, machine-readable formats (CSV/JSON), and audit packages; can generate user-specified data formats and provide QR codes for easy display and reuse.'
+              ]
+            },
+            {
+              q: 'What if suppliers are uncooperative or data is incomplete?',
+              a: [
+                'Provide a lightweight supplier portal and AI advisor that supports invitations, task assignments, and automatic reminders. The AI advisor enables low-barrier data completion without brand-side training, constrains and validates data quality, and triggers recalculation once backfilled data meets quality standards. The entire process is traceable for auditing.'
+              ]
+            },
+            {
+              q: 'Who owns my data? Is it secure?',
+              a: [
+                'Data and results belong to the client. Climate Seal does not retain users’ raw data but provides operational logs for traceability. Data residency, export, and deletion can be enabled as needed; on‑premises deployment is also supported for data security.'
+              ]
+            }
+          ]
+        },
+        {
+          name: 'Pricing',
+          items: [
+            {
+              q: 'How are pricing and trials arranged?',
+              a: [
+                'We offer one free trial report. The full version is billed based on calculation credits. The goal is to reduce the time and cost of a single PCF run to 1% of traditional methods.'
+              ]
+            }
+          ]
+        },
+        {
+          name: 'Others',
+          items: [
+            {
+              q: 'What is the difference between “Product Carbon Footprint (PCF)” and “Corporate Carbon Accounting (Scope 1/2/3)”?',
+              a: [
+                'PCF measures greenhouse gas emissions across the entire life cycle of a single product, focusing on the product itself (raw materials/semi-finished/finished goods). Corporate carbon accounting, following the GHG Protocol, categorizes emissions into Scope 1/2/3 at the organizational level, focusing on overall corporate emissions (total energy consumption, employee activities, etc.).'
+              ]
+            }
+          ]
+        }
+      ]
+    }
   },
   
   // 中文翻译
@@ -1734,6 +1849,104 @@ export const translations: Record<Language, TranslationData> = {
           content: '如果您对本隐私政策有任何疑问，请通过以下方式联系我们：'
         }
       }
+    }
+    ,
+    faq: {
+      title: '常见问题 FAQ',
+      seo: {
+        title: '常见问题 | Climate Seal',
+        description: '关于产品、功能、价格与支持的常见问题。',
+        indexable: true,
+      },
+      groups: [
+        {
+          name: '产品',
+          items: [
+            {
+              q: '常见使用场景',
+              a: [
+                '品牌方招标需要供应商提供 PCF、出口其他国家地区的商品需要披露 PCF；碳税、电池、DPP 数字护照等场景也都需要以 PCF 作为支撑。'
+              ]
+            },
+            {
+              q: 'Climate Seal 是做什么的？跟传统咨询有什么不同？',
+              a: [
+                '面向产品碳足迹（PCF）的 AI 一体化计算与合规交付平台。将 BOM 清洗、因子匹配、计算、风险评估、审计证据打包自动化完成；相比咨询项目（数周-数月），数小时出结果，成本可降 90%+。'
+              ]
+            },
+            {
+              q: '开始用需要提供哪些数据？会不会很难？',
+              a: [
+                '三个最少文件即可：产品说明/BOM/能耗/物流；缺项可用行业默认或相似工艺暂填，并标注假设与不确定性。系统提供向导式模板、单位校验与自动补全；在资料不全时，会引导找到数据所有者并帮助其理解数据格式与要求，实现低门槛的数据获取。'
+              ]
+            },
+            {
+              q: '多快能拿到第一个结果？准确性受什么影响？',
+              a: [
+                '从导入三个文件到产生结果约需 1–2 小时；加上风险评估与矫正，总时长约 2–4 小时。供应链碳管理因供应商数量与产品复杂度会更久，我们先覆盖前 80% 排放贡献，再迭代长尾。准确性主要取决于：BOM 与能耗信息的完整度，以及对业务流程的理解清晰度。'
+              ]
+            },
+            {
+              q: '如何核算 Scope 3 范畴 1（采购的商品与服务）？',
+              a: [
+                '遵循“供应商特定优先 → 混合法 → 平均因子 → 支出法（EEIO）兜底”的路线；边界为 cradle-to-gate；与范畴 2/4/5 明确分工防止双算；为每条采购项给出 DQR 与不确定性，后续拿到更好数据可回填重算。'
+              ]
+            },
+            {
+              q: '结果靠不靠谱？能审计/可验证吗？',
+              a: [
+                '对齐 ISO 14067，内置 DQR 数据质量评分、风险分析、不确定性与数据血缘；一键导出审计包，可对接第三方核证（SGS/BSI/TÜV 等）。'
+              ]
+            },
+            {
+              q: 'BOM 能否批量导入并自动匹配因子？',
+              a: [
+                '支持 Excel/CSV 批量导入（可处理上百行 BOM）；系统进行多层级解析、单位清洗、规格抽取，并用规则 + AI 批量因子匹配（可设置信心阈值与人工复核队列）。'
+              ]
+            },
+            {
+              q: '交付物与格式有哪些？能满足 CBAM / PEF / EPD / DPP 吗？',
+              a: [
+                '输出 PDF 报告 + 机器可读格式（CSV/JSON）+ 审计包；可按用户要求生成数据格式，并提供二维码便于外显与复用。'
+              ]
+            },
+            {
+              q: '供应商不配合/数据不全怎么办？',
+              a: [
+                '提供供应商轻量门户与 AI 顾问，支持邀请与任务分发/自动提醒；AI 顾问引导供应商低门槛补数，无需品牌方培训；可约束并验证供应商上传数据质量，回填达标后自动重算；全程留痕，便于审核。'
+              ]
+            },
+            {
+              q: '我的数据归谁？安全吗？',
+              a: [
+                '数据与结果归客户；Climate Seal 不保留用户原始数据，提供操作日志留痕。可按需启用数据驻留与导出/删除；亦支持本地化部署以保障数据安全。'
+              ]
+            }
+          ]
+        },
+        {
+          name: '价格',
+          items: [
+            {
+              q: '价格与试用怎么安排？',
+              a: [
+                '提供 1 个报告的免费试用额度；正式版按计算额度（request credits）计费。目标是将一次 PCF 的时间与费用降至传统路径的 1%。'
+              ]
+            }
+          ]
+        },
+        {
+          name: '其他',
+          items: [
+            {
+              q: '“产品碳足迹（PCF）”与“企业碳核算（Scope 1/2/3）”的区别？',
+              a: [
+                'PCF 衡量的是单个产品全生命周期的温室气体排放，关注对象是产品（原材料/半成品/成品）；企业碳核算遵循 GHG Protocol，将企业排放分为 Scope 1/2/3，关注对象是组织层面的总体排放（整体能耗/员工活动等）。'
+              ]
+            }
+          ]
+        }
+      ]
     }
   }
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Script from 'next/script';
@@ -26,50 +26,63 @@ type Article = {
 export default function ArticleDetail() {
   const { language } = useLanguage();
   const params = useParams();
-  const [article, setArticle] = useState<Article | null>(null);
-  const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
-  const [shareUrl, setShareUrl] = useState<string>('');
-  const [canWebShare, setCanWebShare] = useState<boolean>(false);
+  const [routeId, setRouteId] = useState<string>(typeof (params as any)?.id === 'string' ? (params as any).id : '');
 
   const articles: Article[] = articlesData.articles;
 
   useEffect(() => {
-    const foundArticle = articles.find(a => a.id === params.id);
-    setArticle(foundArticle || null);
-
-    if (foundArticle) {
-      // Get related articles from the same category
-      const related = articles
-        .filter(a => a.id !== foundArticle.id && a.category === foundArticle.category)
-        .slice(0, 3);
-      setRelatedArticles(related);
+    // 兜底从 URL 解析 id，防止部分环境下 useParams 初始为空
+    if (!routeId && typeof window !== 'undefined') {
+      const path = window.location.pathname || '';
+      const seg = path.split('/').filter(Boolean);
+      const maybeId = seg[1] || '';
+      if (maybeId) setRouteId(decodeURIComponent(maybeId));
     }
-  }, [params.id, articles]);
+  }, [routeId]);
 
-  // Build share URL with UTM once article is known (client-side)
+  const { article, relatedArticles } = useMemo(() => {
+    const id = routeId || ((params as any)?.id as string);
+    const replacement = articles.find(a => a.id === 'stop-using-default-values-cbam-one-time-pcf');
+    let found = articles.find(a => a.id === id) || null;
+    if (found && found.id === 'cbam-default-values-vs-pcf' && replacement) {
+      found = { ...(replacement as Article), id: found.id } as Article;
+    }
+
+    const related = found
+      ? articles.filter(a => a.id !== found!.id && a.category === found!.category).slice(0, 3)
+      : [];
+
+    return { article: found, relatedArticles: related };
+  }, [routeId, params, articles]);
+
+  // Client-only share URL，避免 SSR/CSR 不一致导致 hydration 报错
+  const [shareUrl, setShareUrl] = useState<string>('');
+  const [canWebShare, setCanWebShare] = useState<boolean>(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   useEffect(() => {
     if (!article) return;
-    const origin = typeof window !== 'undefined' 
-      ? window.location.origin 
-      : (process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com');
+    if (typeof window === 'undefined') return;
+    const origin = window.location.origin;
     const url = new URL(`/resources/${article.id}`, origin);
     url.searchParams.set('utm_source', 'share');
     url.searchParams.set('utm_medium', 'article');
     url.searchParams.set('utm_campaign', 'referral');
     setShareUrl(url.toString());
-    if (typeof navigator !== 'undefined' && (navigator as any).share) {
-      setCanWebShare(true);
-    }
+    setCanWebShare(typeof navigator !== 'undefined' && !!(navigator as any).share);
   }, [article]);
 
+  // SSR 首屏避免直接 404，若未解析到则给出轻量提示
   if (!article) {
     return (
       <div className="min-h-screen bg-[rgb(0,52,50)] flex items-center justify-center">
-        <div className="text-white text-center">
-          <h1 className="text-2xl font-bold mb-4">
-            {language === 'zh' ? '文章未找到' : 'Article Not Found'}
-          </h1>
-          <Link href="/solution-resources" className="text-[#9ef894] hover:underline">
+        <div className="text-white/90 text-center">
+          <h1 className="text-2xl font-bold mb-2">{language === 'zh' ? '正在载入文章…' : 'Loading article…'}</h1>
+          <Link href="/resources" className="text-[#9ef894] hover:underline">
             {language === 'zh' ? '← 返回资源中心' : '← Back to Resources'}
           </Link>
         </div>
@@ -283,8 +296,8 @@ export default function ArticleDetail() {
             </div>
           </div>
 
-          {/* Enhanced Share Actions */}
-          {article && (
+          {/* Enhanced Share Actions - 仅在客户端渲染，避免 SSR/CSR href 不一致 */}
+          {article && isClient && shareUrl && (
             <div className="mt-12 pt-8 border-t border-white/20">
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div>

@@ -36,13 +36,27 @@ export default function SolutionResources() {
   const articles: Article[] = articlesData.articles;
   const categories: Category[] = articlesData.categories;
 
+  // Hide empty/placeholder articles from viewers
+  const isMeaningfulArticle = (article: Article) => {
+    const contentEn = (article.content || '').trim();
+    const contentZh = (article.contentZh || '').trim();
+    const excerptEn = (article.excerpt || '').trim();
+    const excerptZh = (article.excerptZh || '').trim();
+    const combined = `${contentEn}\n${contentZh}\n${excerptEn}\n${excerptZh}`;
+    const looksPlaceholder = /This is a sample article|This is another sample article|这是示例文章内容|示例文章|示例文章内容|这是另一个关于/i.test(combined);
+    const minLen = 120; // require some substance in either language
+    const hasSubstance = contentEn.length >= minLen || contentZh.length >= minLen;
+    return !looksPlaceholder && hasSubstance;
+  };
+  const meaningfulArticles = articles.filter(isMeaningfulArticle);
+
   useEffect(() => {
     if (selectedCategory === 'all') {
-      setFilteredArticles(articles);
+      setFilteredArticles(meaningfulArticles);
     } else {
-      setFilteredArticles(articles.filter(article => article.category === selectedCategory));
+      setFilteredArticles(meaningfulArticles.filter(article => article.category === selectedCategory));
     }
-  }, [selectedCategory, articles]);
+  }, [selectedCategory, meaningfulArticles]);
 
   const getArticleTitle = (article: Article) => {
     return language === 'zh' ? article.titleZh : article.title;
@@ -63,6 +77,14 @@ export default function SolutionResources() {
       : date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
+  // Map old CBAM article to the new content for display while keeping the old id for the link
+  const replacement = articles.find(a => a.id === 'stop-using-default-values-cbam-one-time-pcf');
+  const sourceList = filteredArticles.length ? filteredArticles : meaningfulArticles;
+  const displayArticles = sourceList.map(a => (a.id === 'cbam-default-values-vs-pcf' && replacement)
+    ? ({ ...replacement, id: a.id } as Article)
+    : a
+  );
+
   return (
     <div className="min-h-screen bg-[rgb(0,52,50)]">
       {/* JSON-LD: Breadcrumb + FAQ（仅元信息，不渲染 UI）*/}
@@ -81,7 +103,7 @@ export default function SolutionResources() {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "itemListElement": (filteredArticles || articles).slice(0, 50).map((a: Article, idx: number) => ({
+          "itemListElement": (displayArticles || articles).slice(0, 50).map((a: Article, idx: number) => ({
             "@type": "ListItem",
             "position": idx + 1,
             "url": `${process.env.NEXT_PUBLIC_APP_URL || 'https://climate-seal.com'}/resources/${a.id}`,
@@ -155,7 +177,7 @@ export default function SolutionResources() {
       <section className="pb-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredArticles.map((article) => (
+            {displayArticles.map((article) => (
               <div
                 key={article.id}
                 className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105 cursor-pointer group"
@@ -177,7 +199,7 @@ export default function SolutionResources() {
                         (e.target as HTMLImageElement).style.display = 'block';
                       }}
                       placeholder="blur"
-                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAAPwCdABmX/9k="
                     />
                   )}
                   {/* Category Badge */}
@@ -224,9 +246,9 @@ export default function SolutionResources() {
             ))}
 
             {/* Empty State - Placeholder Cards for Market Team */}
-            {process.env.NODE_ENV !== 'production' && filteredArticles.length < 6 && (
+            {process.env.NODE_ENV !== 'production' && displayArticles.length < 6 && (
               <>
-                {Array.from({ length: 6 - filteredArticles.length }).map((_, index) => (
+                {Array.from({ length: 6 - displayArticles.length }).map((_, index) => (
                   <div
                     key={`placeholder-${index}`}
                     className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 border-dashed"

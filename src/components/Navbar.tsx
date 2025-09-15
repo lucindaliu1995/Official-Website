@@ -20,6 +20,7 @@ const Navbar = () => {
     { name: t.nav.pricing, href: '#pricing', route: '/' },
     { name: t.nav.about, href: '#about', route: '/' },
     { name: t.nav.contact, href: '#contact', route: '/' },
+    { name: 'FAQ', href: '/faq', route: '/faq', isLink: true },
   ];
 
   const handleNavClick = (href: string, route: string) => {
@@ -52,7 +53,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => {
               // Special handling for Resources (direct link)
-              if (item.name === t.nav.resources) {
+              if (item.isLink) {
                 return (
                   <Link
                     key={item.name}
@@ -99,7 +100,7 @@ const Navbar = () => {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-teal-800 bg-opacity-95">
               {navItems.map((item) => {
                 // Special handling for Resources in mobile
-                if (item.name === t.nav.resources) {
+                if (item.isLink) {
                   return (
                     <Link
                       key={item.name}

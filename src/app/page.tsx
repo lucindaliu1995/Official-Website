@@ -421,9 +421,12 @@ export default function Home() {
       <section id="home" className="min-h-screen bg-[rgb(0,52,50)] relative overflow-hidden" data-theme="home" data-section="home-hero" data-category="landing">
         {/* Background overlay - removed for unified color */}
         
+        {/* Contrast gradient overlay to improve text readability over media */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[rgba(0,52,50,0.55)] via-[rgba(0,52,50,0.35)] to-transparent"></div>
+        
         <div className="relative z-10 min-h-screen grid grid-cols-1 lg:grid-cols-2 items-center">
           <div className="text-center lg:text-left text-white px-4 lg:px-16 order-2 lg:order-1 mt-6 lg:mt-0 lg:translate-x-8 lg:translate-y-4">
-            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4 relative z-20">
+            <h1 className="text-[clamp(22px,5vw,40px)] md:text-[clamp(28px,4vw,48px)] font-bold leading-snug mb-4 relative z-20">
               {/* Keep mobile unchanged; on desktop enforce no-wrap for specific phrases */}
               <span className="md:hidden">{t.hero.title}</span>
               <span className="hidden md:inline">
@@ -475,7 +478,7 @@ export default function Home() {
           </div>
           
           {/* Polar Bears Image */}
-          <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-full lg:min-h-screen order-1 lg:order-2">
+          <div className="relative z-0 h-[300px] sm:h-[400px] md:h-[500px] lg:h-full lg:min-h-screen order-1 lg:order-2">
             <Image
               src="/polar-bears.png"
               alt="Illustration of polar bears swimming, Climate Seal brand visual"
@@ -1791,29 +1794,22 @@ export default function Home() {
       {/* FAQ (compact) */}
       <section id="faq" className="bg-[rgb(0,52,50)] py-12 sm:py-16">
         <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 sm:mb-8 text-center">{language === 'zh' ? '常见问题' : 'FAQ'}</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 sm:mb-8 text-center">{t.faq?.title || (language === 'zh' ? '常见问题' : 'FAQ')}</h2>
           <div className="space-y-3">
-            {/* Item 1 */}
-            <details className="group rounded-xl bg-white/5 border border-white/10 p-4">
-              <summary className="cursor-pointer list-none flex items-center justify-between text-white font-semibold">{language === 'zh' ? '需要准备哪些数据？' : 'What data do I need to start?'}
-                <span className="transition-transform group-open:rotate-180 text-white/70">⌄</span>
-              </summary>
-              <div className="mt-2 text-white/80 text-sm">{language === 'zh' ? '产品基本信息、BOM清单（如有）、能耗/物流等基础数据。有数据即可开始，没有也可先生成草稿模型。' : 'Basic product info, BOM if available, and energy/logistics data. You can start with partial data and refine later.'}</div>
-            </details>
-            {/* Item 2 */}
-            <details className="group rounded-xl bg-white/5 border border-white/10 p-4">
-              <summary className="cursor-pointer list-none flex items-center justify-between text-white font-semibold">{language === 'zh' ? '多久能拿到审计就绪报告？' : 'How fast to get an audit‑ready report?'}
-                <span className="transition-transform group-open:rotate-180 text-white/70">⌄</span>
-              </summary>
-              <div className="mt-2 text-white/80 text-sm">{language === 'zh' ? '小时级输出：典型在4–48小时，取决于数据完整度与复杂度。' : 'Hours, typically 4–48 hours depending on data completeness and complexity.'}</div>
-            </details>
-            {/* Item 3 */}
-            <details className="group rounded-xl bg-white/5 border border-white/10 p-4">
-              <summary className="cursor-pointer list-none flex items-center justify-between text-white font-semibold">{language === 'zh' ? '是否与SBTi/ISO 14067对齐？' : 'Is it aligned with SBTi / ISO 14067?'}
-                <span className="transition-transform group-open:rotate-180 text-white/70">⌄</span>
-              </summary>
-              <div className="mt-2 text-white/80 text-sm">{language === 'zh' ? '是。方法学基于LCA，输出对齐GHG Protocol、ISO 14067，并提供可审计证据链。' : 'Yes. LCA‑based methodology with outputs aligned to GHG Protocol and ISO 14067, including auditable evidence trails.'}</div>
-            </details>
+            {t.faq?.groups
+              ?.flatMap((g) => g.items)
+              .slice(0, 3)
+              .map((item, idx) => (
+                <details key={idx} className="group rounded-xl bg-white/5 border border-white/10 p-4">
+                  <summary className="cursor-pointer list-none flex items-center justify-between text-white font-semibold">
+                    {item.q}
+                    <span className="transition-transform group-open:rotate-180 text-white/70">⌄</span>
+                  </summary>
+                  <div className="mt-2 text-white/80 text-sm whitespace-pre-line">
+                    {Array.isArray(item.a) ? item.a[0] : item.a}
+                  </div>
+                </details>
+              ))}
           </div>
           <div className="text-center mt-6">
             <a href="/faq" className="inline-block px-6 py-3 rounded-full bg-[#9ef894] text-black font-medium">{language === 'zh' ? '查看更多问题' : 'View all FAQs'}</a>
