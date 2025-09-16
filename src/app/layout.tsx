@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   },
   description: "AI Agent for product carbon footprint automation. Automated LCA calculation & SBTi report generation. Scope 1/2/3 emissions analysis with intelligent data processing. Zero-expertise carbon accounting.",
   robots: {
-    index: process.env.NODE_ENV === 'production',
-    follow: process.env.NODE_ENV === 'production'
+    index: (process.env.NEXT_PUBLIC_INDEXABLE || '').toLowerCase() === 'true' || process.env.NODE_ENV === 'production',
+    follow: (process.env.NEXT_PUBLIC_INDEXABLE || '').toLowerCase() === 'true' || process.env.NODE_ENV === 'production'
   },
   alternates: {
     canonical: "/",
